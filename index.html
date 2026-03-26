@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에듀케레 분석지 — EBS-2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744;
+  --navy-mid: #2a3d6b;
+  --gold: #c8a84b;
+  --gold-light: #f0e0a0;
+  --cream: #fdfaf3;
+  --white: #ffffff;
+  --text-dark: #1a1a2e;
+  --text-mid: #3a3a5c;
+  --text-light: #6a6a8a;
+  --green-bg: #e8f4e8;
+  --green-text: #2d6a2d;
+  --yellow-bg: #fffbe6;
+  --yellow-text: #7a5c00;
+  --border: #d0d0e0;
+  --sidebar-w: 220px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 3px 0 15px rgba(0,0,0,0.3);
+}
+.sidebar-logo {
+  padding: 22px 16px 14px;
+  border-bottom: 1px solid rgba(200,168,75,0.3);
+}
+.sidebar-logo .academy {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.sidebar-logo .series {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+  margin-top: 2px;
+}
+.sidebar-logo .subtitle {
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 3px;
+}
+.sidebar-section {
+  padding: 10px 14px 4px;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.passage-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.75);
+  padding: 9px 16px 9px 14px;
+  font-size: 11.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.18s;
+  border-left: 3px solid transparent;
+  line-height: 1.35;
+}
+.passage-btn:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+.passage-btn.active {
+  background: rgba(200,168,75,0.15);
+  color: var(--gold);
+  border-left-color: var(--gold);
+  font-weight: 600;
+}
+.passage-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-right: 6px;
+  color: var(--gold);
+}
+
+/* ── MAIN ── */
+#main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOP BAR ── */
+#topbar {
+  background: var(--white);
+  border-bottom: 2px solid var(--gold);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 14px 16px 12px;
+  font-size: 12.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: all 0.18s;
+}
+.tab-btn:hover { color: var(--navy); }
+.tab-btn.active {
+  color: var(--navy);
+  border-bottom-color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── CONTENT AREA ── */
+#content {
+  padding: 36px 42px 60px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── PASSAGE HEADER ── */
+.passage-header {
+  margin-bottom: 28px;
+}
+.passage-header .tag {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.passage-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 4px 0 8px;
+  line-height: 1.2;
+}
+.passage-header .meta {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+/* ── SECTION ── */
+.section { display: none; }
+.section.active { display: block; }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title .icon {
+  width: 28px; height: 28px;
+  background: var(--navy);
+  color: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── FULL TEXT BOX ── */
+.fulltext-box {
+  background: var(--white);
+  border: 1.5px solid var(--navy);
+  border-radius: 8px;
+  padding: 22px 26px;
+  margin-bottom: 28px;
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text-dark);
+}
+
+/* ── SENTENCE ANALYSIS ── */
+.sent-block {
+  margin-bottom: 26px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.sent-block:last-child { border-bottom: none; }
+
+.sent-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 7px;
+}
+.sent-en {
+  background: var(--white);
+  border: 1px solid #ccc;
+  border-left: 4px solid var(--navy-mid);
+  border-radius: 4px;
+  padding: 11px 16px;
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 9px;
+}
+.sent-slash {
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-bottom: 3px;
+  line-height: 1.6;
+  padding-left: 4px;
+}
+.sent-ko {
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-bottom: 10px;
+  padding-left: 4px;
+  line-height: 1.6;
+  font-style: italic;
+}
+.grammar-item {
+  background: var(--yellow-bg);
+  border-left: 3px solid #c8a800;
+  border-radius: 3px;
+  padding: 7px 12px;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  line-height: 1.65;
+}
+.grammar-item .g-name {
+  font-weight: 700;
+  color: var(--yellow-text);
+}
+.grammar-item .g-ex { color: var(--text-mid); margin: 1px 0; }
+.grammar-item .g-tip { color: var(--navy); font-weight: 600; }
+
+/* ── VOCAB ── */
+.vocab-item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 14px;
+  margin-bottom: 6px;
+  background: var(--green-bg);
+  border-radius: 5px;
+  flex-wrap: wrap;
+}
+.vocab-word {
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--green-text);
+  min-width: 130px;
+}
+.vocab-meaning { font-size: 12px; color: var(--text-dark); min-width: 120px; }
+.vocab-pos {
+  font-size: 11px;
+  color: var(--white);
+  background: var(--green-text);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+.vocab-deriv { font-size: 11px; color: var(--text-light); font-style: italic; }
+
+/* ── GRAMMAR SUMMARY ── */
+.gram-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+.gram-block .g-title {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 13.5px;
+  margin-bottom: 6px;
+}
+.gram-block .g-evidence {
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  color: var(--text-mid);
+  background: #f5f5fb;
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.gram-block .g-point {
+  font-size: 12px;
+  color: var(--text-dark);
+  line-height: 1.65;
+}
+
+/* ── TRANSLATION ── */
+.translation-text {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 26px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-dark);
+}
+
+/* ── TOPIC STRUCTURE ── */
+.topic-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+}
+.topic-label {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.topic-content { font-size: 13.5px; line-height: 1.75; color: var(--text-dark); }
+.structure-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.step-badge {
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.step-text { font-size: 12.5px; color: var(--text-dark); line-height: 1.65; }
+
+/* ── QUIZ ── */
+.quiz-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.quiz-q {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 14px;
+  line-height: 1.7;
+}
+.quiz-passage {
+  background: #f8f8fc;
+  border-left: 3px solid var(--navy-mid);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: 'EB Garamond', serif;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+.quiz-options { list-style: none; }
+.quiz-options li {
+  margin-bottom: 7px;
+}
+.quiz-options li button {
+  width: 100%;
+  text-align: left;
+  background: #f5f5fb;
+  border: 1.5px solid transparent;
+  border-radius: 6px;
+  padding: 9px 14px;
+  font-size: 12.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-dark);
+}
+.quiz-options li button:hover { background: #ececf8; border-color: var(--navy-mid); }
+.quiz-options li button.correct {
+  background: #e6f4ea;
+  border-color: #2d8a4e;
+  color: #1a5c30;
+  font-weight: 600;
+}
+.quiz-options li button.wrong {
+  background: #fdecea;
+  border-color: #c0392b;
+  color: #8b0000;
+}
+.quiz-explanation {
+  display: none;
+  margin-top: 10px;
+  background: var(--yellow-bg);
+  border-left: 3px solid var(--gold);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--yellow-text);
+  border-radius: 3px;
+  line-height: 1.65;
+}
+.quiz-explanation.show { display: block; }
+.quiz-reset {
+  margin-top: 10px;
+  background: none;
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+  border-radius: 5px;
+  padding: 5px 14px;
+  font-size: 11.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.quiz-reset:hover { background: var(--navy); color: var(--white); }
+
+/* ── 서술형 ── */
+.essay-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.essay-q {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.7;
+}
+.essay-condition {
+  font-size: 11.5px;
+  color: var(--text-light);
+  background: #f5f5fb;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-bottom: 12px;
+}
+.essay-textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text-dark);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.essay-textarea:focus { border-color: var(--navy); }
+.essay-answer-btn {
+  margin-top: 10px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.essay-answer-btn:hover { background: var(--navy-mid); }
+.essay-model-answer {
+  display: none;
+  margin-top: 12px;
+  background: var(--green-bg);
+  border-left: 3px solid var(--green-text);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--green-text);
+  border-radius: 3px;
+  line-height: 1.7;
+}
+.essay-model-answer.show { display: block; }
+
+/* ── FOOTER ── */
+.page-footer {
+  margin-top: 50px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-light);
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="academy">에듀케레 영수학원</div>
+    <div class="series">EBS-2</div>
+    <div class="subtitle">영어 분석지 시리즈</div>
+  </div>
+  <div class="sidebar-section">지문 목록</div>
+  <button class="passage-btn active" onclick="selectPassage(0)">
+    <span class="passage-num">G</span>Gateway
+  </button>
+  <button class="passage-btn" onclick="selectPassage(1)">
+    <span class="passage-num">1</span>비자 거절의 날
+  </button>
+  <button class="passage-btn" onclick="selectPassage(2)">
+    <span class="passage-num">2</span>고산 등반의 교훈
+  </button>
+  <button class="passage-btn" onclick="selectPassage(3)">
+    <span class="passage-num">3</span>Francis와 오르간
+  </button>
+  <button class="passage-btn" onclick="selectPassage(4)">
+    <span class="passage-num">4</span>Vera의 피난처
+  </button>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <button class="tab-btn active" onclick="selectTab(0)">① 전문</button>
+    <button class="tab-btn" onclick="selectTab(1)">② 문장분석</button>
+    <button class="tab-btn" onclick="selectTab(2)">③ 핵심단어</button>
+    <button class="tab-btn" onclick="selectTab(3)">④ 전문해석</button>
+    <button class="tab-btn" onclick="selectTab(4)">⑤ 주제·요지</button>
+    <button class="tab-btn" onclick="selectTab(5)">⑥ 변형문제</button>
+  </div>
+  <div id="content">
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASSAGE 0: Gateway -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="passage" id="passage-0">
+
+  <div class="passage-header">
+    <div class="tag">에듀케레 영수학원 · EBS-2</div>
+    <h1>Gateway</h1>
+    <div class="meta">지문 G · 서사적 에세이 · 장르: 단편 소설</div>
+  </div>
+
+  <!-- TAB 0: 전문 -->
+  <div class="section active" data-tab="0">
+    <div class="section-title"><span class="icon">①</span>전문</div>
+    <div class="fulltext-box">
+      "Where could it be?" Sophie asked herself. It had been more than ten years since she had last visited the area where she had grown up. The village had changed a lot over time. Uncertain, she awkwardly looked around at her surroundings. She walked the narrow streets of the village, unsure about which way to go. Suddenly, Sophie saw a familiar sight. "Yes, this must be it," she thought. In front of her was a wall with flowers painted on it. Although the colors were now faded, the familiar shapes on the wall were the same ones she had painted with her father as a child. Sophie nodded, smiled brightly, and walked toward the gate. At last, she had finally found the house she had grown up in.
+    </div>
+  </div>
+
+  <!-- TAB 1: 문장분석 -->
+  <div class="section" data-tab="1">
+    <div class="section-title"><span class="icon">②</span>문장분석</div>
+
+    <div class="sent-block">
+      <div class="sent-num">① "Where could it be?" Sophie asked herself.</div>
+      <div class="sent-en">"Where could it be?" Sophie asked herself.</div>
+      <div class="sent-slash">"Where / could it be?" / Sophie asked / herself.</div>
+      <div class="sent-ko">"어디 있을까?" / Sophie는 자신에게 물었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 간접 화법 / 직접 화법 (Direct Speech)</div>
+        <div class="g-ex">▶ "Where could it be?" — 인물의 생각을 직접 인용</div>
+        <div class="g-tip">★ 직접 화법과 간접 화법의 전환 시 시제·인칭 변화 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 재귀대명사 (Reflexive Pronoun)</div>
+        <div class="g-ex">▶ asked herself — 주어와 동일 대상을 목적어로 강조</div>
+        <div class="g-tip">★ herself vs. her 용법 구분 — 재귀 용법 vs. 강조 용법 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">② It had been more than ten years since she had last visited the area where she had grown up.</div>
+      <div class="sent-en">It had been more than ten years since she had last visited the area where she had grown up.</div>
+      <div class="sent-slash">It had been / more than ten years / since she had last visited / the area / where she had grown up.</div>
+      <div class="sent-ko">그녀가 자랐던 / 그 지역을 / 마지막으로 방문한 지 / 10년도 넘었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ It ~ since 구문 (과거완료와 함께)</div>
+        <div class="g-ex">▶ It had been more than ten years since she had last visited</div>
+        <div class="g-tip">★ "It has been + 기간 + since + 과거" vs. "It had been + 기간 + since + 과거완료" — 시제 일치 빈출</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계부사 where (장소)</div>
+        <div class="g-ex">▶ the area where she had grown up — 선행사 the area 수식</div>
+        <div class="g-tip">★ where = in which — 관계부사 vs. 관계대명사 대체 가능 여부 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">③ The village had changed a lot over time.</div>
+      <div class="sent-en">The village had changed a lot over time.</div>
+      <div class="sent-slash">The village / had changed / a lot / over time.</div>
+      <div class="sent-ko">마을은 / 시간이 흐르면서 / 많이 변해 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 과거완료 (Past Perfect)</div>
+        <div class="g-ex">▶ had changed — 기준 과거 시점 이전에 완료된 상태 표현</div>
+        <div class="g-tip">★ 과거완료 vs. 단순 과거 구분 — 시간 순서 판단 문제 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">④ Uncertain, she awkwardly looked around at her surroundings.</div>
+      <div class="sent-en">Uncertain, she awkwardly looked around at her surroundings.</div>
+      <div class="sent-slash">Uncertain, / she awkwardly / looked around / at her surroundings.</div>
+      <div class="sent-ko">확신이 없어 / 그녀는 어색하게 / 주변을 둘러보았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 분사구문 / 형용사 독립 수식 (Adjective as Adverbial)</div>
+        <div class="g-ex">▶ Uncertain = Being uncertain — 주어의 상태 묘사</div>
+        <div class="g-tip">★ 분사구문·형용사구의 의미상 주어 일치 확인 — 어법 오류 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑤ She walked the narrow streets of the village, unsure about which way to go.</div>
+      <div class="sent-en">She walked the narrow streets of the village, unsure about which way to go.</div>
+      <div class="sent-slash">She walked / the narrow streets / of the village, / unsure / about which way to go.</div>
+      <div class="sent-ko">그녀는 / 마을의 좁은 거리를 / 어느 방향으로 가야 할지 / 확신하지 못하며 걸었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 간접의문문 (Indirect Question)</div>
+        <div class="g-ex">▶ which way to go = which way she should go</div>
+        <div class="g-tip">★ 의문사 + to부정사 → 명사구 역할 / 어순 주의 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑥ Suddenly, Sophie saw a familiar sight.</div>
+      <div class="sent-en">Suddenly, Sophie saw a familiar sight.</div>
+      <div class="sent-slash">Suddenly, / Sophie saw / a familiar sight.</div>
+      <div class="sent-ko">갑자기 / Sophie는 / 친숙한 광경을 / 보았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 부사 suddenly의 위치</div>
+        <div class="g-ex">▶ 문장 맨 앞 — 극적 전환을 나타내는 서사 장치</div>
+        <div class="g-tip">★ 부사 위치에 따른 강조 효과 — 어순 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑦ "Yes, this must be it," she thought.</div>
+      <div class="sent-en">"Yes, this must be it," she thought.</div>
+      <div class="sent-slash">"Yes, / this must be it," / she thought.</div>
+      <div class="sent-ko">"그래, / 여기가 분명 그곳이야," / 그녀는 생각했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 추측의 조동사 must (강한 확신)</div>
+        <div class="g-ex">▶ this must be it — 현재 사실에 대한 강한 추론</div>
+        <div class="g-tip">★ must (확신) vs. might/could (약한 추측) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑧ In front of her was a wall with flowers painted on it.</div>
+      <div class="sent-en">In front of her was a wall with flowers painted on it.</div>
+      <div class="sent-slash">In front of her / was a wall / with flowers painted on it.</div>
+      <div class="sent-ko">그녀 앞에 / 꽃이 그려진 / 담벼락이 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 도치 구문 (Inversion) — 장소 부사구 문두</div>
+        <div class="g-ex">▶ In front of her was a wall — 주어·동사 도치</div>
+        <div class="g-tip">★ 부사구 도치 → 주어·동사 순서 역전 확인 / 어법 오류 빈출</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ with + 목적어 + 분사 (with 분사구문)</div>
+        <div class="g-ex">▶ with flowers painted on it — 수동 분사 사용 (flowers가 그려지는 대상)</div>
+        <div class="g-tip">★ with + O + p.p. vs. with + O + -ing 능동·수동 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑨ Although the colors were now faded, the familiar shapes on the wall were the same ones she had painted with her father as a child.</div>
+      <div class="sent-en">Although the colors were now faded, the familiar shapes on the wall were the same ones she had painted with her father as a child.</div>
+      <div class="sent-slash">Although / the colors were now faded, / the familiar shapes / on the wall / were the same ones / she had painted / with her father / as a child.</div>
+      <div class="sent-ko">비록 색이 이제는 바래 있었지만, / 담벼락의 친숙한 형태들은 / 어린 시절 / 아버지와 함께 / 그녀가 그렸던 / 바로 그것이었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 양보 접속사 although</div>
+        <div class="g-ex">▶ Although the colors were now faded — 대조·양보의 부사절</div>
+        <div class="g-tip">★ although vs. despite / in spite of — 접속사 vs. 전치사 구분 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 목적격 생략</div>
+        <div class="g-ex">▶ the same ones (that/which) she had painted — 목적격 관계대명사 생략</div>
+        <div class="g-tip">★ 목적격 관계대명사 생략 가능 조건 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑩ Sophie nodded, smiled brightly, and walked toward the gate.</div>
+      <div class="sent-en">Sophie nodded, smiled brightly, and walked toward the gate.</div>
+      <div class="sent-slash">Sophie nodded, / smiled brightly, / and walked / toward the gate.</div>
+      <div class="sent-ko">Sophie는 고개를 끄덕이고, / 밝게 미소 지으며, / 문을 향해 걸어갔다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 등위접속사 and — 병렬 구조</div>
+        <div class="g-ex">▶ nodded, smiled, and walked — 세 동사의 병렬 연결</div>
+        <div class="g-tip">★ 병렬 구조에서 품사·형태 일치 확인 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑪ At last, she had finally found the house she had grown up in.</div>
+      <div class="sent-en">At last, she had finally found the house she had grown up in.</div>
+      <div class="sent-slash">At last, / she had finally found / the house / she had grown up in.</div>
+      <div class="sent-ko">마침내, / 그녀는 / 자신이 자란 / 집을 / 드디어 찾아냈다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 전치사 후치 (Stranded Preposition)</div>
+        <div class="g-ex">▶ the house she had grown up in = the house in which she had grown up</div>
+        <div class="g-tip">★ 관계대명사절 내 전치사 위치 — in which 변환 출제</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 핵심단어 -->
+  <div class="section" data-tab="2">
+    <div class="section-title"><span class="icon">③</span>핵심단어 및 표현</div>
+    <div class="vocab-item">
+      <div class="vocab-word">uncertain</div>
+      <div class="vocab-meaning">확신하지 못하는, 불확실한</div>
+      <div class="vocab-pos">adj.</div>
+      <div class="vocab-deriv">uncertainty (n.), certainly (adv.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">awkwardly</div>
+      <div class="vocab-meaning">어색하게, 불편하게</div>
+      <div class="vocab-pos">adv.</div>
+      <div class="vocab-deriv">awkward (adj.), awkwardness (n.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">surroundings</div>
+      <div class="vocab-meaning">주변 환경, 주위</div>
+      <div class="vocab-pos">n.</div>
+      <div class="vocab-deriv">surround (v.), surrounding (adj.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">familiar</div>
+      <div class="vocab-meaning">친숙한, 낯익은</div>
+      <div class="vocab-pos">adj.</div>
+      <div class="vocab-deriv">familiarity (n.), familiarize (v.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">faded</div>
+      <div class="vocab-meaning">바랜, 흐릿해진</div>
+      <div class="vocab-pos">adj.</div>
+      <div class="vocab-deriv">fade (v.), fading (adj.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">sight</div>
+      <div class="vocab-meaning">광경, 시야</div>
+      <div class="vocab-pos">n.</div>
+      <div class="vocab-deriv">sightseeing (n.), insightful (adj.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">narrow</div>
+      <div class="vocab-meaning">좁은</div>
+      <div class="vocab-pos">adj.</div>
+      <div class="vocab-deriv">narrowly (adv.), narrowness (n.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">at last</div>
+      <div class="vocab-meaning">마침내, 드디어</div>
+      <div class="vocab-pos">adv. phr.</div>
+      <div class="vocab-deriv">= finally, eventually</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">grow up</div>
+      <div class="vocab-meaning">자라다, 성장하다</div>
+      <div class="vocab-pos">phr. v.</div>
+      <div class="vocab-deriv">grown-up (n./adj.)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">nod</div>
+      <div class="vocab-meaning">고개를 끄덕이다</div>
+      <div class="vocab-pos">v.</div>
+      <div class="vocab-deriv">nod (n.)</div>
+    </div>
+  </div>
+
+  <!-- TAB 3: 전문해석 -->
+  <div class="section" data-tab="3">
+    <div class="section-title"><span class="icon">④</span>전문해석</div>
+    <div class="translation-text">
+      "어디 있을까?" Sophie는 혼자 중얼거렸다. 그녀가 어린 시절을 보낸 그 지역을 마지막으로 방문한 지 10년도 훨씬 넘었다. 마을은 세월이 흐르면서 많이 변해 있었다. 확신이 없는 Sophie는 어색하게 주변을 두리번거렸다. 어느 길로 가야 할지 몰라 마을의 좁은 골목을 걸었다. 그때 갑자기 Sophie의 눈에 익숙한 광경이 들어왔다. "그래, 분명히 여기야." 그녀는 속으로 생각했다. 그녀 앞에는 꽃이 그려진 담벼락이 있었다. 색은 이제 많이 바래 있었지만, 담벼락에 새겨진 익숙한 형태들은 어린 시절 아버지와 함께 그녀가 직접 그렸던 바로 그것이었다. Sophie는 고개를 끄덕이며 밝게 미소 짓고는 문을 향해 걸어갔다. 마침내, 그녀는 자신이 자라온 집을 드디어 찾아낸 것이었다.
+    </div>
+  </div>
+
+  <!-- TAB 4: 주제·요지 -->
+  <div class="section" data-tab="4">
+    <div class="section-title"><span class="icon">⑤</span>주제·요지·구조</div>
+    <div class="topic-box">
+      <div class="topic-label">주제 (Topic)</div>
+      <div class="topic-content">오랜 세월 후 고향을 찾아가며 기억 속 흔적을 통해 집을 발견하는 여정</div>
+    </div>
+    <div class="topic-box">
+      <div class="topic-label">요지 (Main Idea)</div>
+      <div class="topic-content">Sophie는 오랜만에 찾은 고향에서 낯설음을 느끼지만, 어린 시절 아버지와 함께 그린 꽃 그림이 담긴 담벼락이라는 기억 속의 단서를 통해 마침내 자신이 자란 집을 찾아낸다.</div>
+    </div>
+    <div class="topic-box">
+      <div class="topic-label">구조 흐름</div>
+      <div class="structure-step">
+        <div class="step-badge">도입</div>
+        <div class="step-text">Sophie가 10년 만에 고향을 방문하지만 변화한 마을에서 방향을 잡지 못하고 혼란스러워함</div>
+      </div>
+      <div class="structure-step">
+        <div class="step-badge">전개</div>
+        <div class="step-text">갑자기 친숙한 광경(꽃 그림 담벼락)을 발견하고, 어린 시절의 기억과 연결함</div>
+      </div>
+      <div class="structure-step">
+        <div class="step-badge">결론</div>
+        <div class="step-text">기억 속 단서를 통해 자신이 자란 집을 찾아내며 감동적 재회를 이룸</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: 변형문제 -->
+  <div class="section" data-tab="5">
+    <div class="section-title"><span class="icon">⑥</span>변형문제 & 서술형</div>
+
+    <!-- Q1 주제추론 -->
+    <div class="quiz-block" id="G-q1">
+      <div class="quiz-q">1. 다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('G-q1', this, false)">① 고향의 급격한 도시화로 인한 상실감</button></li>
+        <li><button onclick="checkAnswer('G-q1', this, false)">② 낯선 환경에서 길을 잃었을 때의 대처법</button></li>
+        <li><button onclick="checkAnswer('G-q1', this, true)">③ 기억 속의 단서를 통해 오랜만에 고향 집을 찾아내는 여정</button></li>
+        <li><button onclick="checkAnswer('G-q1', this, false)">④ 아버지와의 추억이 삶의 방향을 결정짓는 방식</button></li>
+        <li><button onclick="checkAnswer('G-q1', this, false)">⑤ 세월의 흐름에도 변하지 않는 자연의 아름다움</button></li>
+      </ul>
+      <div class="quiz-explanation" id="G-q1-exp">정답 ③ — Sophie는 변해버린 마을에서 혼란을 겪다가, 어린 시절 아버지와 함께 그린 꽃 담벼락이라는 기억 속 단서를 발견하고 마침내 고향 집을 찾아낸다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('G-q1')">↺ 다시 풀기</button>
+    </div>
+
+    <!-- Q2 빈칸추론 -->
+    <div class="quiz-block" id="G-q2">
+      <div class="quiz-q">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="quiz-passage">Although the colors were now faded, the familiar shapes on the wall were the same ones she had painted with her father as a child. Sophie nodded, smiled brightly, and walked toward the gate. At last, she had finally found __________ she had grown up in.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('G-q2', this, false)">① the village</button></li>
+        <li><button onclick="checkAnswer('G-q2', this, false)">② the road</button></li>
+        <li><button onclick="checkAnswer('G-q2', this, true)">③ the house</button></li>
+        <li><button onclick="checkAnswer('G-q2', this, false)">④ the memory</button></li>
+        <li><button onclick="checkAnswer('G-q2', this, false)">⑤ the gate</button></li>
+      </ul>
+      <div class="quiz-explanation" id="G-q2-exp">정답 ③ — 지문 마지막 문장 "the house she had grown up in"이 정답의 근거. Sophie가 찾고 있던 것은 자신이 자라난 '집'이다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('G-q2')">↺ 다시 풀기</button>
+    </div>
+
+    <!-- Q3 어법 -->
+    <div class="quiz-block" id="G-q3">
+      <div class="quiz-q">3. 다음 밑줄 친 부분 중 어법상 틀린 것은?</div>
+      <div class="quiz-passage">It had been more than ten years since she had last <u>(①visited)</u> the area <u>(②where)</u> she had grown up. <u>(③Uncertain)</u>, she awkwardly looked around at her surroundings. In front of her <u>(④was)</u> a wall with flowers <u>(⑤painting)</u> on it.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('G-q3', this, false)">① visited</button></li>
+        <li><button onclick="checkAnswer('G-q3', this, false)">② where</button></li>
+        <li><button onclick="checkAnswer('G-q3', this, false)">③ Uncertain</button></li>
+        <li><button onclick="checkAnswer('G-q3', this, false)">④ was</button></li>
+        <li><button onclick="checkAnswer('G-q3', this, true)">⑤ painting → painted</button></li>
+      </ul>
+      <div class="quiz-explanation" id="G-q3-exp">정답 ⑤ — "with flowers painted on it"에서 flowers는 그려지는 대상(수동)이므로 과거분사 painted가 맞다. painting(능동)은 틀림.</div>
+      <button class="quiz-reset" onclick="resetQuiz('G-q3')">↺ 다시 풀기</button>
+    </div>
+
+    <!-- Q4 내용불일치 -->
+    <div class="quiz-block" id="G-q4">
+      <div class="quiz-q">4. 다음 글의 내용과 일치하지 않는 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('G-q4', this, false)">① Sophie는 고향 마을을 10년 이상 방문하지 않았다.</button></li>
+        <li><button onclick="checkAnswer('G-q4', this, false)">② Sophie는 마을의 좁은 거리를 걸으며 방향을 찾지 못했다.</button></li>
+        <li><button onclick="checkAnswer('G-q4', this, true)">③ 담벼락의 꽃 그림 색깔은 여전히 선명하게 유지되고 있었다.</button></li>
+        <li><button onclick="checkAnswer('G-q4', this, false)">④ Sophie는 어린 시절 아버지와 함께 담벼락에 그림을 그렸다.</button></li>
+        <li><button onclick="checkAnswer('G-q4', this, false)">⑤ Sophie는 결국 자신이 자란 집을 찾아냈다.</button></li>
+      </ul>
+      <div class="quiz-explanation" id="G-q4-exp">정답 ③ — 지문에서 "the colors were now faded(색이 이제 바래 있었다)"라고 했으므로, 색이 여전히 선명하다는 설명은 틀리다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('G-q4')">↺ 다시 풀기</button>
+    </div>
+
+    <!-- Q5 글의순서 -->
+    <div class="quiz-block" id="G-q5">
+      <div class="quiz-q">5. 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br><small style="font-weight:400;color:#666">"Where could it be?" Sophie asked herself. It had been more than ten years since she had last visited the area where she had grown up.</small></div>
+      <div class="quiz-passage">
+        (A) Although the colors were now faded, the familiar shapes on the wall were the same ones she had painted with her father as a child. Sophie nodded, smiled brightly, and walked toward the gate.<br><br>
+        (B) The village had changed a lot over time. Uncertain, she awkwardly looked around at her surroundings. She walked the narrow streets of the village, unsure about which way to go.<br><br>
+        (C) Suddenly, Sophie saw a familiar sight. "Yes, this must be it," she thought. In front of her was a wall with flowers painted on it.
+      </div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('G-q5', this, false)">① (A)-(B)-(C)</button></li>
+        <li><button onclick="checkAnswer('G-q5', this, true)">② (B)-(C)-(A)</button></li>
+        <li><button onclick="checkAnswer('G-q5', this, false)">③ (B)-(A)-(C)</button></li>
+        <li><button onclick="checkAnswer('G-q5', this, false)">④ (C)-(A)-(B)</button></li>
+        <li><button onclick="checkAnswer('G-q5', this, false)">⑤ (C)-(B)-(A)</button></li>
+      </ul>
+      <div class="quiz-explanation" id="G-q5-exp">정답 ② (B)-(C)-(A) — (B) 마을 변화·방향 혼란 → (C) 친숙한 담벼락 발견 → (A) 기억 확인 후 문을 향해 걸어감</div>
+      <button class="quiz-reset" onclick="resetQuiz('G-q5')">↺ 다시 풀기</button>
+    </div>
+
+    <!-- 서술형 -->
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 1 — 빈칸 완성</div>
+      <div class="essay-q">다음은 위 글의 핵심 내용을 요약한 문장이다. 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+      <div class="essay-condition">조건: 본문에 나온 단어를 그대로 쓸 것 / 각 빈칸에 한 단어씩</div>
+      <div class="quiz-passage">Sophie revisited her hometown after over ten years and felt (A)__________, but she eventually found her childhood home by recognizing a wall with (B)__________ painted on it.</div>
+      <textarea class="essay-textarea" placeholder="(A): ___________ / (B): ___________"></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('G-essay1')">모범답안 보기</button>
+      <div class="essay-model-answer" id="G-essay1">
+        <strong>모범답안:</strong> (A) uncertain / (B) flowers<br>
+        <span style="font-size:11px">근거: "Uncertain, she awkwardly looked around" / "a wall with flowers painted on it"</span>
+      </div>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 2 — 영어 서술</div>
+      <div class="essay-q">Sophie가 집을 찾을 수 있었던 이유를 본문 내용을 바탕으로 영어로 서술하시오.</div>
+      <div class="essay-condition">조건: 완전한 영어 문장으로 / 25단어 내외</div>
+      <textarea class="essay-textarea" placeholder="답을 여기에 쓰세요..."></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('G-essay2')">모범답안 보기</button>
+      <div class="essay-model-answer" id="G-essay2">
+        <strong>모범답안:</strong> Sophie found her childhood home because she recognized the wall with faded flowers that she had painted with her father when she was a child.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">에듀케레 영수학원 분석지 · EBS-2 · Gateway</div>
+</div>
+<!-- END PASSAGE 0 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASSAGE 1: 비자 거절의 날 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="passage" id="passage-1" style="display:none">
+
+  <div class="passage-header">
+    <div class="tag">에듀케레 영수학원 · EBS-2</div>
+    <h1>비자 거절의 날</h1>
+    <div class="meta">지문 1 · 개인 서사 · 감정 묘사</div>
+  </div>
+
+  <!-- TAB 0: 전문 -->
+  <div class="section active" data-tab="0">
+    <div class="section-title"><span class="icon">①</span>전문</div>
+    <div class="fulltext-box">
+      It was the day I had been preparing for. I drove for an hour and a half to apply for a visa. My heart was racing, but I felt ready. That same day, I helped three people who didn't know English by translating for the immigration officer. Two of them were lucky to get their visas. Then I heard my name called. Believing things were going smoothly, I made my way to the counter. I showed my documents and property papers to prove that I would return home after visiting my children. Unfortunately, the officer, who had smiled when I was helping her, suddenly turned serious. She ignored my papers and put a red stamp on my application. I didn't have a chance to say a word. I felt as if a heavy rock was pressing down on my mind. I didn't expect to hear her words of rejection. I felt dizzy, and my eyes were full of tears. I couldn't see anything at that moment.
+    </div>
+  </div>
+
+  <!-- TAB 1: 문장분석 -->
+  <div class="section" data-tab="1">
+    <div class="section-title"><span class="icon">②</span>문장분석</div>
+
+    <div class="sent-block">
+      <div class="sent-num">① It was the day I had been preparing for.</div>
+      <div class="sent-en">It was the day I had been preparing for.</div>
+      <div class="sent-slash">It was / the day / I had been preparing for.</div>
+      <div class="sent-ko">그것은 / 내가 준비해 온 / 바로 그 날이었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 목적격 생략</div>
+        <div class="g-ex">▶ the day (that/which) I had been preparing for — 목적격 관계대명사 생략</div>
+        <div class="g-tip">★ 전치사+관계대명사 / 관계대명사 생략 조건 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 과거완료진행 (Past Perfect Continuous)</div>
+        <div class="g-ex">▶ had been preparing — 과거 기준 시점 이전부터 계속된 행위</div>
+        <div class="g-tip">★ had been -ing vs. had p.p. — 진행 지속성 여부 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">② I drove for an hour and a half to apply for a visa.</div>
+      <div class="sent-en">I drove for an hour and a half to apply for a visa.</div>
+      <div class="sent-slash">I drove / for an hour and a half / to apply for a visa.</div>
+      <div class="sent-ko">나는 / 비자를 신청하기 위해 / 한 시간 반을 운전해 갔다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ to부정사 — 목적의 부사적 용법</div>
+        <div class="g-ex">▶ to apply for a visa — "~하기 위해"의 목적 표현</div>
+        <div class="g-tip">★ to부정사 목적 용법 vs. in order to / so as to 동의 표현 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">③ My heart was racing, but I felt ready.</div>
+      <div class="sent-en">My heart was racing, but I felt ready.</div>
+      <div class="sent-slash">My heart was racing, / but I felt ready.</div>
+      <div class="sent-ko">심장이 두근거렸지만, / 나는 준비가 된 것 같았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 과거진행시제 (Past Continuous)</div>
+        <div class="g-ex">▶ was racing — 당시 진행 중인 상태 묘사</div>
+        <div class="g-tip">★ 진행시제 vs. 단순시제의 의미 차이 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">④ That same day, I helped three people who didn't know English by translating for the immigration officer.</div>
+      <div class="sent-en">That same day, I helped three people who didn't know English by translating for the immigration officer.</div>
+      <div class="sent-slash">That same day, / I helped / three people / who didn't know English / by translating / for the immigration officer.</div>
+      <div class="sent-ko">바로 그 날 / 나는 / 영어를 모르는 / 세 명을 도왔다 / 출입국 담당관을 위해 / 통역을 해 주면서.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 주격 관계대명사 who</div>
+        <div class="g-ex">▶ three people who didn't know English — 선행사(사람) 수식</div>
+        <div class="g-tip">★ who vs. which vs. that — 선행사 종류에 따른 관계대명사 선택 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ by + 동명사 — 수단의 전치사구</div>
+        <div class="g-ex">▶ by translating — "통역함으로써"의 수단 표현</div>
+        <div class="g-tip">★ by -ing (수단) vs. for -ing (이유) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑤ Two of them were lucky to get their visas.</div>
+      <div class="sent-en">Two of them were lucky to get their visas.</div>
+      <div class="sent-slash">Two of them / were lucky / to get their visas.</div>
+      <div class="sent-ko">그들 중 두 명은 / 운 좋게도 / 비자를 받았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ be + 형용사 + to부정사 (감정 형용사)</div>
+        <div class="g-ex">▶ were lucky to get — 형용사 lucky 뒤 to부정사로 이유·결과 표현</div>
+        <div class="g-tip">★ lucky/happy/glad + to부정사 — 감정 원인 표현 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑥ Then I heard my name called.</div>
+      <div class="sent-en">Then I heard my name called.</div>
+      <div class="sent-slash">Then / I heard / my name called.</div>
+      <div class="sent-ko">그때 / 나는 / 내 이름이 / 불리는 것을 들었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 지각동사 + 목적어 + 과거분사 (수동)</div>
+        <div class="g-ex">▶ heard my name called — 이름이 불리는(수동) 상태 지각</div>
+        <div class="g-tip">★ 지각동사 + O + p.p.(수동) vs. + O + -ing(능동·진행) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑦ Believing things were going smoothly, I made my way to the counter.</div>
+      <div class="sent-en">Believing things were going smoothly, I made my way to the counter.</div>
+      <div class="sent-slash">Believing / things were going smoothly, / I made my way / to the counter.</div>
+      <div class="sent-ko">일이 순조롭게 진행되고 있다고 / 믿으면서, / 나는 / 카운터로 향했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 분사구문 — 능동 동시 상황</div>
+        <div class="g-ex">▶ Believing ~ = As I believed ~ — 이유·동시 상황 분사구문</div>
+        <div class="g-tip">★ 분사구문 의미상 주어 — 주절 주어(I)와 일치 여부 확인 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ make one's way (to)</div>
+        <div class="g-ex">▶ made my way to the counter — "나아가다, 향하다"의 관용 표현</div>
+        <div class="g-tip">★ make one's way = move / proceed — 문맥 속 의미 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑧ I showed my documents and property papers to prove that I would return home after visiting my children.</div>
+      <div class="sent-en">I showed my documents and property papers to prove that I would return home after visiting my children.</div>
+      <div class="sent-slash">I showed / my documents and property papers / to prove / that I would return home / after visiting my children.</div>
+      <div class="sent-ko">나는 / 서류와 재산 증명서를 / 보여 주었다 / 자녀를 방문한 후 / 귀국할 것임을 / 증명하기 위해.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ to부정사 — 목적 + that절 목적어</div>
+        <div class="g-ex">▶ to prove that I would return — prove의 목적어로 that절</div>
+        <div class="g-tip">★ that절 명사절 / to부정사 목적 부사절의 복합 구조 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑨ Unfortunately, the officer, who had smiled when I was helping her, suddenly turned serious.</div>
+      <div class="sent-en">Unfortunately, the officer, who had smiled when I was helping her, suddenly turned serious.</div>
+      <div class="sent-slash">Unfortunately, / the officer, / who had smiled / when I was helping her, / suddenly turned serious.</div>
+      <div class="sent-ko">불행히도 / 내가 도와줄 때 / 미소를 지었던 / 그 담당관이 / 갑자기 / 진지해졌다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 계속적 용법의 관계대명사 who</div>
+        <div class="g-ex">▶ the officer, who had smiled — 콤마로 분리된 부가 설명</div>
+        <div class="g-tip">★ 계속적 용법(,who) vs. 한정적 용법(who) 의미 차이 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 연결동사 turned + 형용사</div>
+        <div class="g-ex">▶ turned serious — become의 의미, 형용사 보어</div>
+        <div class="g-tip">★ turn/become/grow + 형용사(보어) — 부사와 혼동 주의 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑩ She ignored my papers and put a red stamp on my application.</div>
+      <div class="sent-en">She ignored my papers and put a red stamp on my application.</div>
+      <div class="sent-slash">She ignored / my papers / and put / a red stamp / on my application.</div>
+      <div class="sent-ko">그녀는 / 내 서류를 / 무시하고 / 내 신청서에 / 빨간 도장을 / 찍었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 등위접속사 and — 동사 병렬</div>
+        <div class="g-ex">▶ ignored ~ and put ~ — 두 동사 병렬 연결</div>
+        <div class="g-tip">★ 병렬 구조에서 동사 형태 일치 확인 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑪ I didn't have a chance to say a word.</div>
+      <div class="sent-en">I didn't have a chance to say a word.</div>
+      <div class="sent-slash">I didn't have / a chance / to say a word.</div>
+      <div class="sent-ko">나는 / 한 마디도 / 할 기회가 / 없었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ to부정사 — 명사 수식 (형용사적 용법)</div>
+        <div class="g-ex">▶ a chance to say — chance를 수식하는 형용사적 to부정사</div>
+        <div class="g-tip">★ opportunity/chance/time + to부정사 — 명사 수식 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑫ I felt as if a heavy rock was pressing down on my mind.</div>
+      <div class="sent-en">I felt as if a heavy rock was pressing down on my mind.</div>
+      <div class="sent-slash">I felt / as if / a heavy rock / was pressing down / on my mind.</div>
+      <div class="sent-ko">나는 / 마치 / 무거운 돌이 / 내 마음을 / 짓누르는 것처럼 / 느꼈다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ as if + 가정법 과거 (현재 사실 반대)</div>
+        <div class="g-ex">▶ felt as if ~ was pressing — 현재 사실과 반대되는 상황 가정</div>
+        <div class="g-tip">★ as if + 가정법 과거(현재 반대) vs. 가정법 과거완료(과거 반대) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑬ I didn't expect to hear her words of rejection.</div>
+      <div class="sent-en">I didn't expect to hear her words of rejection.</div>
+      <div class="sent-slash">I didn't expect / to hear / her words of rejection.</div>
+      <div class="sent-ko">나는 / 그녀의 거절 통보를 / 들으리라 예상하지 / 못했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ expect + to부정사 (목적어)</div>
+        <div class="g-ex">▶ didn't expect to hear — expect의 목적어로 to부정사</div>
+        <div class="g-tip">★ expect/want/hope + to부정사 — 동명사와 혼용 불가 동사 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑭ I felt dizzy, and my eyes were full of tears.</div>
+      <div class="sent-en">I felt dizzy, and my eyes were full of tears.</div>
+      <div class="sent-slash">I felt dizzy, / and my eyes / were full of tears.</div>
+      <div class="sent-ko">나는 / 어지러움을 느꼈고, / 눈에는 / 눈물이 가득 찼다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ be full of — 관용 표현</div>
+        <div class="g-ex">▶ were full of tears — "눈물로 가득 차다"의 관용구</div>
+        <div class="g-tip">★ full of vs. filled with — 의미 동일 / 전치사 차이 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑮ I couldn't see anything at that moment.</div>
+      <div class="sent-en">I couldn't see anything at that moment.</div>
+      <div class="sent-slash">I couldn't see / anything / at that moment.</div>
+      <div class="sent-ko">나는 / 그 순간 / 아무것도 / 볼 수가 없었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 부정어 + anything (전체 부정)</div>
+        <div class="g-ex">▶ couldn't see anything — 완전 부정 표현 (= could see nothing)</div>
+        <div class="g-tip">★ not ~ anything = nothing — 부정어 중복 사용 금지 출제</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 핵심단어 -->
+  <div class="section" data-tab="2">
+    <div class="section-title"><span class="icon">③</span>핵심단어 및 표현</div>
+    <div class="vocab-item"><div class="vocab-word">apply for</div><div class="vocab-meaning">~을 신청하다</div><div class="vocab-pos">phr. v.</div><div class="vocab-deriv">application (n.), applicant (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">immigration</div><div class="vocab-meaning">이민, 출입국</div><div class="vocab-pos">n.</div><div class="vocab-deriv">immigrant (n.), immigrate (v.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">smoothly</div><div class="vocab-meaning">순조롭게</div><div class="vocab-pos">adv.</div><div class="vocab-deriv">smooth (adj.), smoothness (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">property</div><div class="vocab-meaning">재산, 부동산</div><div class="vocab-pos">n.</div><div class="vocab-deriv">proper (adj.), proprietor (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">prove</div><div class="vocab-meaning">증명하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">proof (n.), proven (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">ignore</div><div class="vocab-meaning">무시하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">ignorance (n.), ignorant (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">rejection</div><div class="vocab-meaning">거절, 거부</div><div class="vocab-pos">n.</div><div class="vocab-deriv">reject (v.), rejective (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">dizzy</div><div class="vocab-meaning">어지러운</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">dizziness (n.), dizzily (adv.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">make one's way</div><div class="vocab-meaning">나아가다, 향하다</div><div class="vocab-pos">phr. v.</div><div class="vocab-deriv">—</div></div>
+    <div class="vocab-item"><div class="vocab-word">press down on</div><div class="vocab-meaning">짓누르다</div><div class="vocab-pos">phr. v.</div><div class="vocab-deriv">pressure (n.), pressing (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">translating</div><div class="vocab-meaning">통역하다, 번역하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">translation (n.), translator (n.)</div></div>
+  </div>
+
+  <!-- TAB 3: 전문해석 -->
+  <div class="section" data-tab="3">
+    <div class="section-title"><span class="icon">④</span>전문해석</div>
+    <div class="translation-text">
+      그것은 내가 그토록 준비해 온 바로 그 날이었다. 비자를 신청하기 위해 한 시간 반을 운전해 갔다. 심장이 두근거렸지만 나는 준비가 되어 있다고 느꼈다. 바로 그 날, 나는 영어를 못하는 세 명의 사람을 위해 출입국 담당관에게 통역을 해 주며 도움을 주었다. 그 중 두 명은 운이 좋아 비자를 받았다. 그리고 나서 내 이름이 불리는 것을 들었다. 일이 잘 되어가고 있다고 믿으며 나는 카운터로 나아갔다. 자녀를 방문한 후 귀국할 것임을 증명하기 위해 서류와 재산 증명서를 제시했다. 그런데 불행히도, 내가 도와줄 때 미소를 지었던 담당관이 갑자기 표정을 굳혔다. 그녀는 내 서류를 무시하고 내 신청서에 빨간 도장을 찍었다. 나는 한 마디도 할 수 없었다. 마치 무거운 바위가 내 마음을 짓누르는 것 같았다. 그녀의 거절 통보를 들으리라고는 예상하지 못했다. 어지러움을 느꼈고, 눈에는 눈물이 가득 찼다. 그 순간 나는 아무것도 볼 수가 없었다.
+    </div>
+  </div>
+
+  <!-- TAB 4: 주제·요지 -->
+  <div class="section" data-tab="4">
+    <div class="section-title"><span class="icon">⑤</span>주제·요지·구조</div>
+    <div class="topic-box"><div class="topic-label">주제</div><div class="topic-content">비자 신청 과정에서 겪은 예상치 못한 거절로 인한 충격과 깊은 좌절감</div></div>
+    <div class="topic-box"><div class="topic-label">요지</div><div class="topic-content">오랫동안 준비하고 타인까지 도우며 기대를 높인 화자는, 담당관의 갑작스러운 태도 변화와 함께 일방적인 비자 거절을 통보받고 극심한 충격과 절망감을 경험한다.</div></div>
+    <div class="topic-box"><div class="topic-label">구조 흐름</div>
+      <div class="structure-step"><div class="step-badge">도입</div><div class="step-text">비자 신청을 위해 오랜 준비 끝에 출발 / 타인을 돕는 긍정적 출발</div></div>
+      <div class="structure-step"><div class="step-badge">전개</div><div class="step-text">이름이 불리고 자신감 있게 카운터로 향함 / 서류를 제시하며 귀국 의사 증명 시도</div></div>
+      <div class="structure-step"><div class="step-badge">위기</div><div class="step-text">담당관의 갑작스러운 태도 변화 — 빨간 도장 = 거절 통보</div></div>
+      <div class="structure-step"><div class="step-badge">결말</div><div class="step-text">충격·어지러움·눈물 — 극심한 감정적 붕괴</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: 변형문제 -->
+  <div class="section" data-tab="5">
+    <div class="section-title"><span class="icon">⑥</span>변형문제 & 서술형</div>
+
+    <div class="quiz-block" id="P1-q1">
+      <div class="quiz-q">1. 다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P1-q1', this, false)">① 타인을 도움으로써 얻는 보람과 행복</button></li>
+        <li><button onclick="checkAnswer('P1-q1', this, false)">② 비자 신청 절차의 복잡함과 개선 방안</button></li>
+        <li><button onclick="checkAnswer('P1-q1', this, false)">③ 언어 장벽이 이민자에게 미치는 영향</button></li>
+        <li><button onclick="checkAnswer('P1-q1', this, true)">④ 예상치 못한 비자 거절로 인한 충격과 좌절감</button></li>
+        <li><button onclick="checkAnswer('P1-q1', this, false)">⑤ 해외 거주 자녀 방문을 위한 준비 과정</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P1-q1-exp">정답 ④ — 화자는 오랜 준비 끝에 비자를 신청하지만 담당관의 일방적 거절로 극심한 충격과 좌절을 경험하는 것이 글의 핵심이다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P1-q1')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P1-q2">
+      <div class="quiz-q">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="quiz-passage">I felt as if a heavy rock was pressing down on my mind. I didn't expect to hear her words of __________.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P1-q2', this, false)">① approval</button></li>
+        <li><button onclick="checkAnswer('P1-q2', this, false)">② advice</button></li>
+        <li><button onclick="checkAnswer('P1-q2', this, false)">③ gratitude</button></li>
+        <li><button onclick="checkAnswer('P1-q2', this, true)">④ rejection</button></li>
+        <li><button onclick="checkAnswer('P1-q2', this, false)">⑤ encouragement</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P1-q2-exp">정답 ④ — 담당관이 빨간 도장을 찍고 서류를 무시한 맥락에서 "거절(rejection)"이 적절하다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P1-q2')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P1-q3">
+      <div class="quiz-q">3. 다음 밑줄 친 부분 중 어법상 틀린 것은?</div>
+      <div class="quiz-passage"><u>(①Believing)</u> things were going smoothly, I made my way to the counter. I showed my documents to prove that I <u>(②would)</u> return home. Unfortunately, the officer, who <u>(③had smiled)</u> when I was helping her, suddenly turned <u>(④seriously)</u>. She ignored my papers and put a red stamp on my <u>(⑤application)</u>.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P1-q3', this, false)">① Believing</button></li>
+        <li><button onclick="checkAnswer('P1-q3', this, false)">② would</button></li>
+        <li><button onclick="checkAnswer('P1-q3', this, false)">③ had smiled</button></li>
+        <li><button onclick="checkAnswer('P1-q3', this, true)">④ seriously → serious</button></li>
+        <li><button onclick="checkAnswer('P1-q3', this, false)">⑤ application</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P1-q3-exp">정답 ④ — turned는 연결동사(linking verb)이므로 부사(seriously)가 아닌 형용사(serious)가 보어로 와야 한다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P1-q3')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P1-q4">
+      <div class="quiz-q">4. 다음 글의 내용과 일치하지 않는 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P1-q4', this, false)">① 화자는 비자 신청 장소까지 한 시간 반을 운전했다.</button></li>
+        <li><button onclick="checkAnswer('P1-q4', this, false)">② 화자는 영어를 모르는 사람들의 통역을 도왔다.</button></li>
+        <li><button onclick="checkAnswer('P1-q4', this, true)">③ 화자가 도운 세 명 모두 비자를 받는 데 성공했다.</button></li>
+        <li><button onclick="checkAnswer('P1-q4', this, false)">④ 담당관은 화자의 서류를 무시하고 빨간 도장을 찍었다.</button></li>
+        <li><button onclick="checkAnswer('P1-q4', this, false)">⑤ 화자는 눈물이 가득 차 아무것도 볼 수 없었다.</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P1-q4-exp">정답 ③ — "Two of them were lucky to get their visas" — 세 명 중 두 명만 비자를 받았다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P1-q4')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P1-q5">
+      <div class="quiz-q">5. 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br><small style="font-weight:400;color:#666">It was the day I had been preparing for. I drove for an hour and a half to apply for a visa.</small></div>
+      <div class="quiz-passage">
+        (A) Unfortunately, the officer, who had smiled when I was helping her, suddenly turned serious. She ignored my papers and put a red stamp on my application. I didn't have a chance to say a word.<br><br>
+        (B) My heart was racing, but I felt ready. That same day, I helped three people who didn't know English by translating for the immigration officer. Two of them were lucky to get their visas.<br><br>
+        (C) Then I heard my name called. Believing things were going smoothly, I made my way to the counter. I showed my documents and property papers to prove that I would return home after visiting my children.
+      </div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P1-q5', this, false)">① (A)-(B)-(C)</button></li>
+        <li><button onclick="checkAnswer('P1-q5', this, false)">② (A)-(C)-(B)</button></li>
+        <li><button onclick="checkAnswer('P1-q5', this, true)">③ (B)-(C)-(A)</button></li>
+        <li><button onclick="checkAnswer('P1-q5', this, false)">④ (C)-(A)-(B)</button></li>
+        <li><button onclick="checkAnswer('P1-q5', this, false)">⑤ (C)-(B)-(A)</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P1-q5-exp">정답 ③ (B)-(C)-(A) — (B) 준비·타인 도움 → (C) 이름 호명·카운터·서류 제시 → (A) 담당관 태도 변화·거절</div>
+      <button class="quiz-reset" onclick="resetQuiz('P1-q5')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 1 — 빈칸 완성</div>
+      <div class="essay-q">다음 요약문의 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+      <div class="essay-condition">조건: 본문에 나온 단어를 그대로 쓸 것 / 각 빈칸에 한 단어씩</div>
+      <div class="quiz-passage">The narrator helped others (A)__________ for the immigration officer, but was shocked when the officer (B)__________ the visa application with a red stamp.</div>
+      <textarea class="essay-textarea" placeholder="(A): ___________ / (B): ___________"></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P1-essay1')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P1-essay1"><strong>모범답안:</strong> (A) translating / (B) rejected (stamped)<br><span style="font-size:11px">근거: "by translating for the immigration officer" / "put a red stamp on my application"</span></div>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 2 — 영어 서술</div>
+      <div class="essay-q">화자가 비자 신청 당일 담당관에게 어떤 도움을 주었는지, 그리고 그 결과는 어떠했는지 영어로 서술하시오.</div>
+      <div class="essay-condition">조건: 완전한 영어 문장으로 / 30단어 내외</div>
+      <textarea class="essay-textarea" placeholder="답을 여기에 쓰세요..."></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P1-essay2')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P1-essay2"><strong>모범답안:</strong> The narrator helped three people who didn't know English by translating for the immigration officer, and two of them successfully received their visas.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">에듀케레 영수학원 분석지 · EBS-2 · 지문 1</div>
+</div>
+<!-- END PASSAGE 1 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASSAGE 2: 고산 등반의 교훈 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="passage" id="passage-2" style="display:none">
+
+  <div class="passage-header">
+    <div class="tag">에듀케레 영수학원 · EBS-2</div>
+    <h1>고산 등반의 교훈</h1>
+    <div class="meta">지문 2 · 경험 서사 · 교훈적 글</div>
+  </div>
+
+  <!-- TAB 0: 전문 -->
+  <div class="section active" data-tab="0">
+    <div class="section-title"><span class="icon">①</span>전문</div>
+    <div class="fulltext-box">
+      After a few nights, we ventured out on a hike to 16,000 feet. The group members were all experienced, so I couldn't understand why they were climbing so slowly, what I thought was a ridiculous pace. Having trained hard for this, I was in the best shape of my life. And, being the rookie, I wanted to prove myself to the group. Why not show off my superior conditioning? So up front I went. Then, as we approached 16,000 feet, I suddenly began to feel dizzy. Not long after, I was staggering. The group had to take my pack. In a matter of minutes, I became a basket case, needing assistance just to walk. On the way down to the hut, I could barely keep in a straight line because of the nausea, headache, and dizziness. Now all I felt was guilt for becoming a burden to the group. I wished I hadn't pushed myself so hard.
+    </div>
+  </div>
+
+  <!-- TAB 1: 문장분석 -->
+  <div class="section" data-tab="1">
+    <div class="section-title"><span class="icon">②</span>문장분석</div>
+
+    <div class="sent-block">
+      <div class="sent-num">① After a few nights, we ventured out on a hike to 16,000 feet.</div>
+      <div class="sent-en">After a few nights, we ventured out on a hike to 16,000 feet.</div>
+      <div class="sent-slash">After a few nights, / we ventured out / on a hike / to 16,000 feet.</div>
+      <div class="sent-ko">며칠 밤이 지난 후 / 우리는 / 16,000피트 높이로 / 하이킹을 감행했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ venture out — 과감히 나서다 (관용 표현)</div>
+        <div class="g-ex">▶ ventured out on a hike — 위험을 무릅쓰고 시도함</div>
+        <div class="g-tip">★ venture + to부정사 / venture out — 문맥 의미 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">② The group members were all experienced, so I couldn't understand why they were climbing so slowly, what I thought was a ridiculous pace.</div>
+      <div class="sent-en">The group members were all experienced, so I couldn't understand why they were climbing so slowly, what I thought was a ridiculous pace.</div>
+      <div class="sent-slash">The group members / were all experienced, / so I couldn't understand / why they were climbing so slowly, / what I thought / was a ridiculous pace.</div>
+      <div class="sent-ko">그룹 멤버들은 모두 경험이 많았기에, / 나는 / 왜 그들이 그렇게 느리게 / 오르는지 이해할 수 없었다, / 내가 보기에 / 우스꽝스러운 속도였다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 간접의문문 (why + 주어 + 동사)</div>
+        <div class="g-ex">▶ why they were climbing — 의문사절이 understand의 목적어</div>
+        <div class="g-tip">★ 간접의문문 어순 — 의문사 + 주어 + 동사 (도치 없음) 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 what — 동격/부연 설명</div>
+        <div class="g-ex">▶ what I thought was a ridiculous pace — 앞 내용을 부연 설명</div>
+        <div class="g-tip">★ what절의 역할 (명사절) vs. which절(관계절) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">③ Having trained hard for this, I was in the best shape of my life.</div>
+      <div class="sent-en">Having trained hard for this, I was in the best shape of my life.</div>
+      <div class="sent-slash">Having trained hard / for this, / I was / in the best shape / of my life.</div>
+      <div class="sent-ko">이것을 위해 / 열심히 훈련해 왔기 때문에 / 나는 / 내 인생 최고의 / 몸 상태였다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 완료 분사구문 (Having + p.p.)</div>
+        <div class="g-ex">▶ Having trained — 주절 동작보다 이전에 완료된 상황 표현</div>
+        <div class="g-tip">★ Having p.p. vs. -ing 분사구문 — 시제 선후 관계 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">④ And, being the rookie, I wanted to prove myself to the group.</div>
+      <div class="sent-en">And, being the rookie, I wanted to prove myself to the group.</div>
+      <div class="sent-slash">And, / being the rookie, / I wanted / to prove myself / to the group.</div>
+      <div class="sent-ko">그리고, / 신참이었기 때문에 / 나는 / 그룹에게 / 자신을 증명하고 싶었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 이유의 분사구문 (being)</div>
+        <div class="g-ex">▶ being the rookie = As I was the rookie</div>
+        <div class="g-tip">★ being + 명사/형용사 분사구문 — 이유·상태 표현 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑤ Why not show off my superior conditioning?</div>
+      <div class="sent-en">Why not show off my superior conditioning?</div>
+      <div class="sent-slash">Why not / show off / my superior conditioning?</div>
+      <div class="sent-ko">내 뛰어난 체력을 / 뽐내지 않을 이유가 / 뭐가 있겠는가?</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ Why not + 동사원형 (수사의문문)</div>
+        <div class="g-ex">▶ Why not show off ~ = I should show off ~ (제안·결심)</div>
+        <div class="g-tip">★ Why not -? — 제안/결심 표현 / 수사의문문 의미 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑥ So up front I went.</div>
+      <div class="sent-en">So up front I went.</div>
+      <div class="sent-slash">So / up front / I went.</div>
+      <div class="sent-ko">그래서 / 나는 / 맨 앞으로 나아갔다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 부사구 도치 (강조)</div>
+        <div class="g-ex">▶ up front I went = I went up front — 부사구 전치로 강조</div>
+        <div class="g-tip">★ 부사구 도치 — 어순 변화·주어 동사 확인 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑦ Then, as we approached 16,000 feet, I suddenly began to feel dizzy.</div>
+      <div class="sent-en">Then, as we approached 16,000 feet, I suddenly began to feel dizzy.</div>
+      <div class="sent-slash">Then, / as we approached 16,000 feet, / I suddenly / began to feel dizzy.</div>
+      <div class="sent-ko">그러다 / 16,000피트에 가까워지자 / 나는 갑자기 / 어지러움을 느끼기 시작했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ begin + to부정사 / 동명사</div>
+        <div class="g-ex">▶ began to feel dizzy — begin은 to부정사·동명사 모두 목적어 가능</div>
+        <div class="g-tip">★ begin/start + to-v / -ing — 의미 동일 / 형태 선택 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑧ Not long after, I was staggering.</div>
+      <div class="sent-en">Not long after, I was staggering.</div>
+      <div class="sent-slash">Not long after, / I was staggering.</div>
+      <div class="sent-ko">얼마 지나지 않아 / 나는 비틀거리고 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 과거진행시제 — 진행 상태</div>
+        <div class="g-ex">▶ was staggering — 과거 특정 시점에 진행 중인 동작</div>
+        <div class="g-tip">★ 진행시제 vs. 단순시제 — 동작의 지속성 표현 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑨ The group had to take my pack.</div>
+      <div class="sent-en">The group had to take my pack.</div>
+      <div class="sent-slash">The group / had to take / my pack.</div>
+      <div class="sent-ko">그룹이 / 내 배낭을 / 대신 들어줘야 했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ had to + 동사원형 (의무 — 과거)</div>
+        <div class="g-ex">▶ had to take — must의 과거 표현 (= was/were forced to)</div>
+        <div class="g-tip">★ must vs. had to — 과거 의무 표현 차이 / must는 과거형 없음 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑩ In a matter of minutes, I became a basket case, needing assistance just to walk.</div>
+      <div class="sent-en">In a matter of minutes, I became a basket case, needing assistance just to walk.</div>
+      <div class="sent-slash">In a matter of minutes, / I became a basket case, / needing assistance / just to walk.</div>
+      <div class="sent-ko">불과 몇 분 만에 / 나는 완전히 무너져 / 걷기 위해서도 / 도움이 필요한 상태가 되었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 현재분사구 — 부수적 상황 (needing)</div>
+        <div class="g-ex">▶ needing assistance just to walk — 주어의 부수적 상태 묘사</div>
+        <div class="g-tip">★ 분사의 능동·수동 / 주어와의 의미 관계 확인 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑪ On the way down to the hut, I could barely keep in a straight line because of the nausea, headache, and dizziness.</div>
+      <div class="sent-en">On the way down to the hut, I could barely keep in a straight line because of the nausea, headache, and dizziness.</div>
+      <div class="sent-slash">On the way down / to the hut, / I could barely / keep in a straight line / because of / the nausea, headache, and dizziness.</div>
+      <div class="sent-ko">오두막으로 내려오는 길에 / 구역질·두통·어지러움 때문에 / 나는 겨우 / 직선을 유지할 수도 없었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ because of + 명사구 (이유 전치사구)</div>
+        <div class="g-ex">▶ because of the nausea, headache, and dizziness</div>
+        <div class="g-tip">★ because of (전치사) vs. because (접속사) — 문법 형태 구분 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ barely — 부정 함의 부사</div>
+        <div class="g-ex">▶ could barely keep — "거의 ~할 수 없다"의 부정 함의</div>
+        <div class="g-tip">★ barely/hardly/scarcely — 부정 함의 부사 의미 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑫ Now all I felt was guilt for becoming a burden to the group.</div>
+      <div class="sent-en">Now all I felt was guilt for becoming a burden to the group.</div>
+      <div class="sent-slash">Now / all I felt / was guilt / for becoming a burden / to the group.</div>
+      <div class="sent-ko">이제 / 내가 느끼는 전부는 / 그룹에게 / 짐이 된 것에 대한 / 죄책감뿐이었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ All + 주어 + 동사 + was 강조 구문</div>
+        <div class="g-ex">▶ all I felt was guilt — "내가 느낀 전부는 ~뿐이었다"</div>
+        <div class="g-tip">★ All ~ was 강조 구문 — it ~ that 강조 구문과 비교 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑬ I wished I hadn't pushed myself so hard.</div>
+      <div class="sent-en">I wished I hadn't pushed myself so hard.</div>
+      <div class="sent-slash">I wished / I hadn't pushed / myself / so hard.</div>
+      <div class="sent-ko">나는 / 그토록 자신을 / 몰아붙이지 않았더라면 / 하고 바랐다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ wish + 가정법 과거완료 (과거 사실 반대)</div>
+        <div class="g-ex">▶ wished I hadn't pushed — 과거 행동에 대한 후회 표현</div>
+        <div class="g-tip">★ wish + 가정법 과거(현재 반대) vs. 가정법 과거완료(과거 반대) 구분 출제</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 핵심단어 -->
+  <div class="section" data-tab="2">
+    <div class="section-title"><span class="icon">③</span>핵심단어 및 표현</div>
+    <div class="vocab-item"><div class="vocab-word">venture</div><div class="vocab-meaning">위험을 무릅쓰고 나서다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">venture (n.), adventurous (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">ridiculous</div><div class="vocab-meaning">우스꽝스러운, 말도 안 되는</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">ridiculously (adv.), ridicule (v./n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">rookie</div><div class="vocab-meaning">신참, 초보자</div><div class="vocab-pos">n.</div><div class="vocab-deriv">—</div></div>
+    <div class="vocab-item"><div class="vocab-word">show off</div><div class="vocab-meaning">과시하다, 자랑하다</div><div class="vocab-pos">phr. v.</div><div class="vocab-deriv">show-off (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">superior</div><div class="vocab-meaning">우월한, 뛰어난</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">superiority (n.) ↔ inferior</div></div>
+    <div class="vocab-item"><div class="vocab-word">stagger</div><div class="vocab-meaning">비틀거리다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">staggering (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">basket case</div><div class="vocab-meaning">완전히 무너진 사람</div><div class="vocab-pos">n. phr.</div><div class="vocab-deriv">—</div></div>
+    <div class="vocab-item"><div class="vocab-word">nausea</div><div class="vocab-meaning">구역질, 메스꺼움</div><div class="vocab-pos">n.</div><div class="vocab-deriv">nauseous (adj.), nauseate (v.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">guilt</div><div class="vocab-meaning">죄책감</div><div class="vocab-pos">n.</div><div class="vocab-deriv">guilty (adj.), guiltily (adv.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">burden</div><div class="vocab-meaning">짐, 부담</div><div class="vocab-pos">n.</div><div class="vocab-deriv">burdensome (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">barely</div><div class="vocab-meaning">겨우, 간신히</div><div class="vocab-pos">adv.</div><div class="vocab-deriv">= hardly, scarcely</div></div>
+  </div>
+
+  <!-- TAB 3: 전문해석 -->
+  <div class="section" data-tab="3">
+    <div class="section-title"><span class="icon">④</span>전문해석</div>
+    <div class="translation-text">
+      며칠 밤이 지난 후, 우리는 16,000피트 높이로 하이킹을 감행했다. 그룹 멤버들은 모두 경험이 풍부했기에, 나는 그들이 왜 그렇게 느리게 오르는지 — 내가 보기엔 우스꽝스럽기까지 한 속도로 — 이해할 수 없었다. 이것을 위해 열심히 훈련해 온 덕에 나는 내 인생 최고의 몸 상태였다. 게다가 신참이었기에 그룹에게 나 자신을 증명하고 싶었다. 내 뛰어난 체력을 뽐내지 않을 이유가 뭐가 있겠는가? 그래서 나는 맨 앞으로 나아갔다. 그러다 16,000피트에 가까워지자 갑자기 어지러움을 느끼기 시작했다. 얼마 지나지 않아 나는 비틀거리고 있었다. 그룹이 내 배낭을 대신 들어줘야 했다. 불과 몇 분 만에 나는 걷기 위해서도 도움이 필요한 완전히 무너진 상태가 되었다. 오두막으로 내려오는 길에, 구역질·두통·어지러움 때문에 나는 직선으로 걷는 것조차 거의 불가능했다. 이제 내가 느끼는 전부는 그룹에게 짐이 된 것에 대한 죄책감뿐이었다. 그토록 자신을 몰아붙이지 않았더라면 하고 바랐다.
+    </div>
+  </div>
+
+  <!-- TAB 4: 주제·요지 -->
+  <div class="section" data-tab="4">
+    <div class="section-title"><span class="icon">⑤</span>주제·요지·구조</div>
+    <div class="topic-box"><div class="topic-label">주제</div><div class="topic-content">고산 등반에서 과도한 자기과시 욕구가 초래한 신체적 붕괴와 후회</div></div>
+    <div class="topic-box"><div class="topic-label">요지</div><div class="topic-content">신참 등반가인 화자는 뛰어난 체력을 과시하려고 무리하게 앞서 나갔다가 고산병으로 그룹에 큰 짐이 되며, 무리하게 자신을 몰아붙인 것을 깊이 후회하게 된다.</div></div>
+    <div class="topic-box"><div class="topic-label">구조 흐름</div>
+      <div class="structure-step"><div class="step-badge">도입</div><div class="step-text">고산 하이킹 시작 / 경험 많은 그룹의 느린 속도를 이해 못함</div></div>
+      <div class="structure-step"><div class="step-badge">전개</div><div class="step-text">훈련에 대한 자신감 + 신참으로서 증명 욕구 → 맨 앞으로 나아감</div></div>
+      <div class="structure-step"><div class="step-badge">위기</div><div class="step-text">16,000피트에서 어지러움·비틀거림·구역질로 그룹의 도움 필요</div></div>
+      <div class="structure-step"><div class="step-badge">결말</div><div class="step-text">죄책감과 후회 — 자신을 너무 몰아붙인 것을 반성</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: 변형문제 -->
+  <div class="section" data-tab="5">
+    <div class="section-title"><span class="icon">⑥</span>변형문제 & 서술형</div>
+
+    <div class="quiz-block" id="P2-q1">
+      <div class="quiz-q">1. 다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P2-q1', this, false)">① 고산 등반을 위한 체력 훈련의 중요성</button></li>
+        <li><button onclick="checkAnswer('P2-q1', this, false)">② 팀워크가 등반 성공에 미치는 긍정적 영향</button></li>
+        <li><button onclick="checkAnswer('P2-q1', this, true)">③ 자기 과시 욕구로 인한 무리한 행동과 그 결과에 대한 후회</button></li>
+        <li><button onclick="checkAnswer('P2-q1', this, false)">④ 고산 환경에서 안전하게 등반하는 방법</button></li>
+        <li><button onclick="checkAnswer('P2-q1', this, false)">⑤ 신참 등반가가 팀에서 리더십을 발휘하는 방법</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P2-q1-exp">정답 ③ — 화자는 자신을 과시하려 무리하게 앞서 나갔다가 고산병으로 그룹에 짐이 되고 후회하게 된다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P2-q1')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P2-q2">
+      <div class="quiz-q">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="quiz-passage">Now all I felt was __________ for becoming a burden to the group. I wished I hadn't pushed myself so hard.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P2-q2', this, false)">① pride</button></li>
+        <li><button onclick="checkAnswer('P2-q2', this, false)">② relief</button></li>
+        <li><button onclick="checkAnswer('P2-q2', this, false)">③ satisfaction</button></li>
+        <li><button onclick="checkAnswer('P2-q2', this, true)">④ guilt</button></li>
+        <li><button onclick="checkAnswer('P2-q2', this, false)">⑤ excitement</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P2-q2-exp">정답 ④ — 그룹에 짐이 된 것에 대한 감정이므로 guilt(죄책감)가 적절하다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P2-q2')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P2-q3">
+      <div class="quiz-q">3. 다음 밑줄 친 부분 중 어법상 틀린 것은?</div>
+      <div class="quiz-passage"><u>(①Having trained)</u> hard for this, I was in the best shape of my life. Being the rookie, I wanted to prove <u>(②myself)</u> to the group. Then, as we <u>(③approached)</u> 16,000 feet, I suddenly began to feel dizzy. The group had to take my pack. In a matter of minutes, I became a basket case, <u>(④needed)</u> assistance just to walk. I wished I <u>(⑤hadn't pushed)</u> myself so hard.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P2-q3', this, false)">① Having trained</button></li>
+        <li><button onclick="checkAnswer('P2-q3', this, false)">② myself</button></li>
+        <li><button onclick="checkAnswer('P2-q3', this, false)">③ approached</button></li>
+        <li><button onclick="checkAnswer('P2-q3', this, true)">④ needed → needing</button></li>
+        <li><button onclick="checkAnswer('P2-q3', this, false)">⑤ hadn't pushed</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P2-q3-exp">정답 ④ — "I became a basket case, needing assistance" — 주어 I가 능동적으로 필요로 하는 상태이므로 능동 분사 needing이 맞다. needed(수동)는 틀림.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P2-q3')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P2-q4">
+      <div class="quiz-q">4. 다음 글의 내용과 일치하지 않는 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P2-q4', this, false)">① 화자는 하이킹을 위해 열심히 훈련해 최상의 몸 상태였다.</button></li>
+        <li><button onclick="checkAnswer('P2-q4', this, false)">② 화자는 그룹 중 신참이어서 자신을 증명하고 싶었다.</button></li>
+        <li><button onclick="checkAnswer('P2-q4', this, true)">③ 화자는 16,000피트에 도달한 직후 서서히 회복하기 시작했다.</button></li>
+        <li><button onclick="checkAnswer('P2-q4', this, false)">④ 화자는 결국 그룹에 짐이 되어 죄책감을 느꼈다.</button></li>
+        <li><button onclick="checkAnswer('P2-q4', this, false)">⑤ 화자는 자신을 너무 몰아붙인 것을 후회했다.</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P2-q4-exp">정답 ③ — 16,000피트에 가까워지자 어지러움·비틀거림이 발생했고 회복이 아닌 악화되었다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P2-q4')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P2-q5">
+      <div class="quiz-q">5. 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br><small style="font-weight:400;color:#666">After a few nights, we ventured out on a hike to 16,000 feet.</small></div>
+      <div class="quiz-passage">
+        (A) Then, as we approached 16,000 feet, I suddenly began to feel dizzy. Not long after, I was staggering. The group had to take my pack.<br><br>
+        (B) The group members were all experienced, so I couldn't understand why they were climbing so slowly. Having trained hard for this, I was in the best shape of my life. And, being the rookie, I wanted to prove myself to the group.<br><br>
+        (C) In a matter of minutes, I became a basket case, needing assistance just to walk. Now all I felt was guilt for becoming a burden to the group. I wished I hadn't pushed myself so hard.
+      </div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P2-q5', this, false)">① (A)-(B)-(C)</button></li>
+        <li><button onclick="checkAnswer('P2-q5', this, true)">② (B)-(A)-(C)</button></li>
+        <li><button onclick="checkAnswer('P2-q5', this, false)">③ (B)-(C)-(A)</button></li>
+        <li><button onclick="checkAnswer('P2-q5', this, false)">④ (C)-(A)-(B)</button></li>
+        <li><button onclick="checkAnswer('P2-q5', this, false)">⑤ (C)-(B)-(A)</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P2-q5-exp">정답 ② (B)-(A)-(C) — (B) 자신감·과시 동기 → (A) 고산병 발생·그룹 도움 → (C) 무력화·죄책감·후회</div>
+      <button class="quiz-reset" onclick="resetQuiz('P2-q5')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 1 — 빈칸 완성</div>
+      <div class="essay-q">다음 요약문의 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+      <div class="essay-condition">조건: 본문에 나온 단어를 그대로 쓸 것 / 각 빈칸에 한 단어씩</div>
+      <div class="quiz-passage">The narrator wanted to (A)__________ himself to the group, but ended up becoming a (B)__________ to them due to altitude sickness.</div>
+      <textarea class="essay-textarea" placeholder="(A): ___________ / (B): ___________"></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P2-essay1')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P2-essay1"><strong>모범답안:</strong> (A) prove / (B) burden<br><span style="font-size:11px">근거: "I wanted to prove myself" / "becoming a burden to the group"</span></div>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 2 — 영어 서술</div>
+      <div class="essay-q">화자가 처음에 그룹의 느린 속도를 이해하지 못한 이유와, 나중에 후회하게 된 이유를 영어로 서술하시오.</div>
+      <div class="essay-condition">조건: 완전한 영어 문장으로 / 35단어 내외</div>
+      <textarea class="essay-textarea" placeholder="답을 여기에 쓰세요..."></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P2-essay2')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P2-essay2"><strong>모범답안:</strong> The narrator didn't understand the slow pace because he was in the best shape of his life. Later, he regretted pushing himself too hard after becoming a burden due to dizziness and nausea.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">에듀케레 영수학원 분석지 · EBS-2 · 지문 2</div>
+</div>
+<!-- END PASSAGE 2 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASSAGE 3: Francis와 오르간 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="passage" id="passage-3" style="display:none">
+
+  <div class="passage-header">
+    <div class="tag">에듀케레 영수학원 · EBS-2</div>
+    <h1>Francis와 오르간</h1>
+    <div class="meta">지문 3 · 역사적 서사 · 전쟁기 개인 경험</div>
+  </div>
+
+  <!-- TAB 0: 전문 -->
+  <div class="section active" data-tab="0">
+    <div class="section-title"><span class="icon">①</span>전문</div>
+    <div class="fulltext-box">
+      Francis Pohan sat at the organ in his Borneo home, a smile on his face as the hymn he had practiced for weeks flowed smoothly under his fingers. The melody blended with the soft sounds of the jungle, filling him with happiness. The organ, his most precious possession, was a source of comfort and joy, especially in these uncertain times. But his peace was interrupted by the distant roar of engines breaking the calm. Soldiers appeared on the jungle road, their boots loud on the dirt as they approached, weapons hanging loosely over their shoulders. Francis' heart raced; it was wartime, and soldiers often took what they wanted. Whispering urgently to his sister, Ellen, he led her to hide behind a tall tree, its thick trunk shielding them. Peeking out, Francis stepped outside carefully and looked at the soldiers walking toward their home. Their loud voices and heavy footsteps filled the quiet jungle. His mind raced with prayers, hoping they would remain unseen.
+    </div>
+  </div>
+
+  <!-- TAB 1: 문장분석 -->
+  <div class="section" data-tab="1">
+    <div class="section-title"><span class="icon">②</span>문장분석</div>
+
+    <div class="sent-block">
+      <div class="sent-num">① Francis Pohan sat at the organ in his Borneo home, a smile on his face as the hymn he had practiced for weeks flowed smoothly under his fingers.</div>
+      <div class="sent-en">Francis Pohan sat at the organ in his Borneo home, a smile on his face as the hymn he had practiced for weeks flowed smoothly under his fingers.</div>
+      <div class="sent-slash">Francis Pohan sat / at the organ / in his Borneo home, / a smile on his face / as the hymn / he had practiced for weeks / flowed smoothly / under his fingers.</div>
+      <div class="sent-ko">Francis Pohan은 / 보르네오 집의 오르간 앞에 앉아 있었다 / 미소를 띠며, / 몇 주간 연습한 / 찬송가가 / 손가락 아래에서 / 부드럽게 흘러나오는 동안.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 독립 분사구문 / with 분사구 (무관계 주어)</div>
+        <div class="g-ex">▶ a smile on his face — 주절과 다른 주어를 가진 부수적 상황 묘사</div>
+        <div class="g-tip">★ with + 명사 + 전치사구 — 부수적 상황 표현 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 목적격 생략</div>
+        <div class="g-ex">▶ the hymn (that) he had practiced for weeks</div>
+        <div class="g-tip">★ 목적격 관계대명사 생략 조건 — 선행사+주어+동사 확인 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">② The melody blended with the soft sounds of the jungle, filling him with happiness.</div>
+      <div class="sent-en">The melody blended with the soft sounds of the jungle, filling him with happiness.</div>
+      <div class="sent-slash">The melody blended / with the soft sounds of the jungle, / filling him / with happiness.</div>
+      <div class="sent-ko">선율은 / 정글의 부드러운 소리와 / 어우러져, / 그를 / 행복으로 가득 채웠다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 결과의 분사구문 (filling)</div>
+        <div class="g-ex">▶ filling him with happiness — "그 결과 ~가 되었다"의 연속 상황</div>
+        <div class="g-tip">★ 분사구문의 연속/결과 의미 — 접속사 and로 전환 가능 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ fill + 목적어 + with (5형식 관용 표현)</div>
+        <div class="g-ex">▶ filling him with happiness — fill A with B 구조</div>
+        <div class="g-tip">★ fill A with B vs. fill B in A — 전치사 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">③ The organ, his most precious possession, was a source of comfort and joy, especially in these uncertain times.</div>
+      <div class="sent-en">The organ, his most precious possession, was a source of comfort and joy, especially in these uncertain times.</div>
+      <div class="sent-slash">The organ, / his most precious possession, / was a source / of comfort and joy, / especially / in these uncertain times.</div>
+      <div class="sent-ko">오르간은, / 그의 가장 소중한 소유물로서, / 위안과 기쁨의 / 원천이었다, / 특히 / 이 불안한 시대에.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 동격 명사구</div>
+        <div class="g-ex">▶ The organ, his most precious possession — 콤마로 연결된 동격</div>
+        <div class="g-tip">★ 동격 명사구 vs. 동격 that절 — 형태·위치 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">④ But his peace was interrupted by the distant roar of engines breaking the calm.</div>
+      <div class="sent-en">But his peace was interrupted by the distant roar of engines breaking the calm.</div>
+      <div class="sent-slash">But / his peace / was interrupted / by the distant roar / of engines / breaking the calm.</div>
+      <div class="sent-ko">그러나 / 그의 평화는 / 고요함을 깨뜨리는 / 멀리서 들리는 / 엔진 소리에 의해 / 방해받았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 수동태 (be + p.p. + by)</div>
+        <div class="g-ex">▶ was interrupted by ~ — 수동 표현 (행위자: 엔진 소리)</div>
+        <div class="g-tip">★ 수동태 행위자 by구 / 생략 가능 조건 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 현재분사 수식 — breaking the calm</div>
+        <div class="g-ex">▶ engines breaking the calm — engines가 능동적으로 고요함을 깨는 상태</div>
+        <div class="g-tip">★ 명사 수식 현재분사(능동) vs. 과거분사(수동) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑤ Soldiers appeared on the jungle road, their boots loud on the dirt as they approached, weapons hanging loosely over their shoulders.</div>
+      <div class="sent-en">Soldiers appeared on the jungle road, their boots loud on the dirt as they approached, weapons hanging loosely over their shoulders.</div>
+      <div class="sent-slash">Soldiers appeared / on the jungle road, / their boots loud / on the dirt / as they approached, / weapons hanging loosely / over their shoulders.</div>
+      <div class="sent-ko">군인들이 / 정글 길에 나타났다, / 다가오면서 / 흙바닥에 군화 소리가 요란했고, / 무기가 / 어깨 위로 / 느슨하게 매달려 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 독립 분사구문 (with 생략형) × 2</div>
+        <div class="g-ex">▶ their boots loud ... / weapons hanging — 주절 주어와 다른 독립 분사구</div>
+        <div class="g-tip">★ 독립 분사구문 — 의미상 주어 별도 명시 구조 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑥ Francis' heart raced; it was wartime, and soldiers often took what they wanted.</div>
+      <div class="sent-en">Francis' heart raced; it was wartime, and soldiers often took what they wanted.</div>
+      <div class="sent-slash">Francis' heart raced; / it was wartime, / and soldiers / often took / what they wanted.</div>
+      <div class="sent-ko">Francis의 심장이 두근거렸다; / 전시였기에, / 군인들은 / 원하는 것을 / 가져가곤 했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 what (선행사 포함)</div>
+        <div class="g-ex">▶ what they wanted = the things that they wanted</div>
+        <div class="g-tip">★ what절 — 선행사 포함 명사절 역할 / that과 혼동 금지 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑦ Whispering urgently to his sister, Ellen, he led her to hide behind a tall tree, its thick trunk shielding them.</div>
+      <div class="sent-en">Whispering urgently to his sister, Ellen, he led her to hide behind a tall tree, its thick trunk shielding them.</div>
+      <div class="sent-slash">Whispering urgently / to his sister, Ellen, / he led her / to hide / behind a tall tree, / its thick trunk / shielding them.</div>
+      <div class="sent-ko">여동생 Ellen에게 / 다급하게 속삭이며, / 그는 그녀를 이끌어 / 큰 나무 뒤에 / 숨게 했다, / 두꺼운 나무 기둥이 / 그들을 가려 주었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ lead + 목적어 + to부정사 (사역적 표현)</div>
+        <div class="g-ex">▶ led her to hide — "그녀가 숨도록 이끌었다"</div>
+        <div class="g-tip">★ lead/cause/allow + O + to-v — 5형식 구조 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 독립 분사구문 — its thick trunk shielding them</div>
+        <div class="g-ex">▶ its thick trunk shielding = its thick trunk was shielding</div>
+        <div class="g-tip">★ 독립 분사구문 주어 별도 표시 — 주절 주어와 다름 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑧ Peeking out, Francis stepped outside carefully and looked at the soldiers walking toward their home.</div>
+      <div class="sent-en">Peeking out, Francis stepped outside carefully and looked at the soldiers walking toward their home.</div>
+      <div class="sent-slash">Peeking out, / Francis stepped outside carefully / and looked at / the soldiers / walking toward their home.</div>
+      <div class="sent-ko">살짝 내다보며, / Francis는 조심스럽게 밖으로 나와 / 집 쪽으로 걸어오는 / 군인들을 / 바라보았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 능동 분사구문 — 동시 동작</div>
+        <div class="g-ex">▶ Peeking out = As Francis peeked out</div>
+        <div class="g-tip">★ 분사구문 주어 일치 — 생략 조건 확인 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 현재분사 수식 — walking toward their home</div>
+        <div class="g-ex">▶ the soldiers walking — soldiers가 능동적으로 걸어오는 상태</div>
+        <div class="g-tip">★ 명사 수식 현재분사(능동) vs. 과거분사(수동) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑨ Their loud voices and heavy footsteps filled the quiet jungle.</div>
+      <div class="sent-en">Their loud voices and heavy footsteps filled the quiet jungle.</div>
+      <div class="sent-slash">Their loud voices / and heavy footsteps / filled / the quiet jungle.</div>
+      <div class="sent-ko">그들의 큰 목소리와 / 무거운 발소리가 / 조용한 정글을 / 가득 채웠다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 복수 주어 — 동사 수 일치</div>
+        <div class="g-ex">▶ voices and footsteps filled — 두 명사 연결 → 복수 동사</div>
+        <div class="g-tip">★ A and B + 복수 동사 수 일치 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑩ His mind raced with prayers, hoping they would remain unseen.</div>
+      <div class="sent-en">His mind raced with prayers, hoping they would remain unseen.</div>
+      <div class="sent-slash">His mind raced / with prayers, / hoping / they would remain unseen.</div>
+      <div class="sent-ko">그의 마음은 / 기도로 가득 차 달렸다, / 그들이 / 눈에 띄지 않기를 / 바라면서.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ hope + that절 (목적어절)</div>
+        <div class="g-ex">▶ hoping (that) they would remain unseen</div>
+        <div class="g-tip">★ hope + to-v (주어 동일) vs. hope + that절 (주어 상이) 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ remain + 형용사 보어 (연결동사)</div>
+        <div class="g-ex">▶ remain unseen — "보이지 않는 상태로 있다"</div>
+        <div class="g-tip">★ remain/stay/become + 형용사 — 부사 혼동 금지 출제</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 핵심단어 -->
+  <div class="section" data-tab="2">
+    <div class="section-title"><span class="icon">③</span>핵심단어 및 표현</div>
+    <div class="vocab-item"><div class="vocab-word">hymn</div><div class="vocab-meaning">찬송가</div><div class="vocab-pos">n.</div><div class="vocab-deriv">—</div></div>
+    <div class="vocab-item"><div class="vocab-word">blend</div><div class="vocab-meaning">어우러지다, 혼합하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">blended (adj.), blend (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">possession</div><div class="vocab-meaning">소유물, 재산</div><div class="vocab-pos">n.</div><div class="vocab-deriv">possess (v.), possessive (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">interrupt</div><div class="vocab-meaning">방해하다, 중단시키다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">interruption (n.), uninterrupted (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">roar</div><div class="vocab-meaning">굉음, 포효 / 굉음을 내다</div><div class="vocab-pos">n./v.</div><div class="vocab-deriv">roaring (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">urgent</div><div class="vocab-meaning">긴박한, 급한</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">urgently (adv.), urgency (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">shield</div><div class="vocab-meaning">가리다, 보호하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">shield (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">peek</div><div class="vocab-meaning">살짝 들여다보다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">peek (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">footstep</div><div class="vocab-meaning">발소리, 발걸음</div><div class="vocab-pos">n.</div><div class="vocab-deriv">—</div></div>
+    <div class="vocab-item"><div class="vocab-word">unseen</div><div class="vocab-meaning">보이지 않는, 눈에 띄지 않는</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">unseen (adv.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">wartime</div><div class="vocab-meaning">전시, 전쟁 중</div><div class="vocab-pos">n./adj.</div><div class="vocab-deriv">war (n.), wartime (adj.)</div></div>
+  </div>
+
+  <!-- TAB 3: 전문해석 -->
+  <div class="section" data-tab="3">
+    <div class="section-title"><span class="icon">④</span>전문해석</div>
+    <div class="translation-text">
+      Francis Pohan은 보르네오 집의 오르간 앞에 미소를 띠며 앉아 있었다. 몇 주 동안 연습해 온 찬송가가 그의 손가락 아래에서 부드럽게 흘러나왔다. 선율은 정글의 부드러운 소리와 어우러져 그를 행복으로 채웠다. 오르간은 그의 가장 소중한 소유물이었으며, 특히 이 불안한 시대에 위안과 기쁨의 원천이었다. 그러나 그의 평화는 고요함을 깨는 멀리서 들리는 엔진 소리에 방해받았다. 군인들이 정글 길에 나타났고, 다가오면서 흙바닥에 군화 소리가 요란했으며, 무기가 어깨 위로 느슨하게 매달려 있었다. Francis의 심장이 두근거렸다. 전시였고 군인들은 원하는 것을 가져가곤 했다. 여동생 Ellen에게 다급하게 속삭이며 그는 그녀를 이끌어 큰 나무 뒤에 숨게 했고, 두꺼운 나무 기둥이 그들을 가려 주었다. 살짝 내다보며 Francis는 조심스럽게 밖으로 나와 집 쪽으로 걸어오는 군인들을 바라보았다. 그들의 큰 목소리와 무거운 발소리가 조용한 정글을 가득 채웠다. 그의 마음은 기도로 가득 달렸다 — 그들이 눈에 띄지 않기를 바라며.
+    </div>
+  </div>
+
+  <!-- TAB 4: 주제·요지 -->
+  <div class="section" data-tab="4">
+    <div class="section-title"><span class="icon">⑤</span>주제·요지·구조</div>
+    <div class="topic-box"><div class="topic-label">주제</div><div class="topic-content">전시 보르네오에서 음악의 평화가 군인들의 등장으로 위협받는 Francis의 공포와 기도</div></div>
+    <div class="topic-box"><div class="topic-label">요지</div><div class="topic-content">전쟁 중 오르간으로 위안을 얻던 Francis는 갑작스러운 군인들의 출현으로 여동생과 함께 나무 뒤에 몸을 숨기며, 발각되지 않기를 간절히 기도한다.</div></div>
+    <div class="topic-box"><div class="topic-label">구조 흐름</div>
+      <div class="structure-step"><div class="step-badge">도입</div><div class="step-text">오르간 연주로 행복을 느끼는 Francis — 전시에도 이어지는 음악의 위안</div></div>
+      <div class="structure-step"><div class="step-badge">전개</div><div class="step-text">엔진 소리와 함께 군인들 등장 — 긴박감 고조</div></div>
+      <div class="structure-step"><div class="step-badge">위기</div><div class="step-text">여동생과 나무 뒤 은신 / 군인들이 집 쪽으로 접근</div></div>
+      <div class="structure-step"><div class="step-badge">결말</div><div class="step-text">기도로 발각되지 않기를 바라는 Francis의 극도의 긴장과 두려움</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: 변형문제 -->
+  <div class="section" data-tab="5">
+    <div class="section-title"><span class="icon">⑥</span>변형문제 & 서술형</div>
+
+    <div class="quiz-block" id="P3-q1">
+      <div class="quiz-q">1. 다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P3-q1', this, false)">① 보르네오 정글의 자연 소리가 음악에 미치는 영향</button></li>
+        <li><button onclick="checkAnswer('P3-q1', this, false)">② 전시에 음악이 심리적 위안이 되는 이유</button></li>
+        <li><button onclick="checkAnswer('P3-q1', this, true)">③ 전쟁 중 군인들의 갑작스러운 등장으로 위협받는 Francis의 두려움과 기도</button></li>
+        <li><button onclick="checkAnswer('P3-q1', this, false)">④ 오르간이 전시에도 소중한 이유</button></li>
+        <li><button onclick="checkAnswer('P3-q1', this, false)">⑤ 전시 보르네오에서 가족이 단결하는 방식</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P3-q1-exp">정답 ③ — 음악의 평화가 군인들의 등장으로 끊기고, Francis는 여동생과 숨으며 발각되지 않기를 기도하는 긴박한 상황이 핵심이다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P3-q1')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P3-q2">
+      <div class="quiz-q">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="quiz-passage">Francis' heart raced; it was wartime, and soldiers often took __________. Whispering urgently to his sister, he led her to hide behind a tall tree.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P3-q2', this, false)">① what they were given</button></li>
+        <li><button onclick="checkAnswer('P3-q2', this, false)">② whatever was offered</button></li>
+        <li><button onclick="checkAnswer('P3-q2', this, true)">③ what they wanted</button></li>
+        <li><button onclick="checkAnswer('P3-q2', this, false)">④ whatever was necessary</button></li>
+        <li><button onclick="checkAnswer('P3-q2', this, false)">⑤ what they were told</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P3-q2-exp">정답 ③ — 원문 "soldiers often took what they wanted" — 군인들이 원하는 것을 가져간다는 전시 상황 표현.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P3-q2')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P3-q3">
+      <div class="quiz-q">3. 다음 밑줄 친 부분 중 어법상 틀린 것은?</div>
+      <div class="quiz-passage">The melody blended with the soft sounds of the jungle, <u>(①filling)</u> him with happiness. The organ, his most precious possession, was a source of comfort and joy. But his peace <u>(②was interrupted)</u> by the distant roar of engines <u>(③breaking)</u> the calm. Soldiers appeared, weapons <u>(④hanging)</u> loosely over their shoulders. His mind raced with prayers, hoping they would remain <u>(⑤unseenly)</u>.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P3-q3', this, false)">① filling</button></li>
+        <li><button onclick="checkAnswer('P3-q3', this, false)">② was interrupted</button></li>
+        <li><button onclick="checkAnswer('P3-q3', this, false)">③ breaking</button></li>
+        <li><button onclick="checkAnswer('P3-q3', this, false)">④ hanging</button></li>
+        <li><button onclick="checkAnswer('P3-q3', this, true)">⑤ unseenly → unseen</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P3-q3-exp">정답 ⑤ — remain은 연결동사이므로 형용사 unseen이 보어로 와야 한다. unseenly는 형용사가 아닌 존재하지 않는 단어이며, remain + 형용사 구조 위반.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P3-q3')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P3-q4">
+      <div class="quiz-q">4. 다음 글의 내용과 일치하지 않는 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P3-q4', this, false)">① Francis는 몇 주 동안 연습한 찬송가를 연주하고 있었다.</button></li>
+        <li><button onclick="checkAnswer('P3-q4', this, false)">② 오르간은 Francis에게 가장 소중한 소유물이었다.</button></li>
+        <li><button onclick="checkAnswer('P3-q4', this, true)">③ Francis는 군인들을 발견하자 바로 집 안에 숨었다.</button></li>
+        <li><button onclick="checkAnswer('P3-q4', this, false)">④ Francis는 여동생 Ellen을 큰 나무 뒤에 숨게 했다.</button></li>
+        <li><button onclick="checkAnswer('P3-q4', this, false)">⑤ Francis는 군인들이 집 쪽으로 걸어오는 것을 바라보았다.</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P3-q4-exp">정답 ③ — Francis는 집 안이 아니라 큰 나무 뒤에 여동생과 함께 숨었으며, 이후 살짝 나와 군인들을 바라보았다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P3-q4')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P3-q5">
+      <div class="quiz-q">5. 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br><small style="font-weight:400;color:#666">Francis Pohan sat at the organ in his Borneo home... The organ, his most precious possession, was a source of comfort and joy.</small></div>
+      <div class="quiz-passage">
+        (A) Whispering urgently to his sister, Ellen, he led her to hide behind a tall tree, its thick trunk shielding them. Peeking out, Francis stepped outside carefully and looked at the soldiers walking toward their home.<br><br>
+        (B) But his peace was interrupted by the distant roar of engines breaking the calm. Soldiers appeared on the jungle road, their boots loud on the dirt as they approached.<br><br>
+        (C) Their loud voices and heavy footsteps filled the quiet jungle. His mind raced with prayers, hoping they would remain unseen.
+      </div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P3-q5', this, false)">① (A)-(B)-(C)</button></li>
+        <li><button onclick="checkAnswer('P3-q5', this, false)">② (A)-(C)-(B)</button></li>
+        <li><button onclick="checkAnswer('P3-q5', this, true)">③ (B)-(A)-(C)</button></li>
+        <li><button onclick="checkAnswer('P3-q5', this, false)">④ (C)-(A)-(B)</button></li>
+        <li><button onclick="checkAnswer('P3-q5', this, false)">⑤ (C)-(B)-(A)</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P3-q5-exp">정답 ③ (B)-(A)-(C) — (B) 평화 방해·군인 등장 → (A) 나무 뒤 은신·군인 목격 → (C) 군인 접근 + 기도</div>
+      <button class="quiz-reset" onclick="resetQuiz('P3-q5')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 1 — 빈칸 완성</div>
+      <div class="essay-q">다음 요약문의 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+      <div class="essay-condition">조건: 본문에 나온 단어를 그대로 쓸 것 / 각 빈칸에 한 단어씩</div>
+      <div class="quiz-passage">While Francis was playing the organ peacefully, soldiers suddenly appeared and (A)__________ his peace, so he hid with his sister, (B)__________ they would not be seen.</div>
+      <textarea class="essay-textarea" placeholder="(A): ___________ / (B): ___________"></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P3-essay1')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P3-essay1"><strong>모범답안:</strong> (A) interrupted / (B) hoping<br><span style="font-size:11px">근거: "his peace was interrupted" / "hoping they would remain unseen"</span></div>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 2 — 영어 서술</div>
+      <div class="essay-q">Francis가 군인들을 발견한 후 여동생과 함께 한 행동을 본문 내용을 바탕으로 영어로 서술하시오.</div>
+      <div class="essay-condition">조건: 완전한 영어 문장으로 / 30단어 내외</div>
+      <textarea class="essay-textarea" placeholder="답을 여기에 쓰세요..."></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P3-essay2')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P3-essay2"><strong>모범답안:</strong> Francis whispered urgently to his sister Ellen and led her to hide behind a tall tree, while praying that they would remain unseen by the soldiers.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">에듀케레 영수학원 분석지 · EBS-2 · 지문 3</div>
+</div>
+<!-- END PASSAGE 3 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- PASSAGE 4: Vera의 피난처 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="passage" id="passage-4" style="display:none">
+
+  <div class="passage-header">
+    <div class="tag">에듀케레 영수학원 · EBS-2</div>
+    <h1>Vera의 피난처</h1>
+    <div class="meta">지문 4 · 일상 서사 · 감성적 치유</div>
+  </div>
+
+  <!-- TAB 0: 전문 -->
+  <div class="section active" data-tab="0">
+    <div class="section-title"><span class="icon">①</span>전문</div>
+    <div class="fulltext-box">
+      Vera couldn't wait for her car to get fixed, but that was going to require longer than initially expected. Unfortunately, that meant relying on the bus for her commute. To add to the cruel irony, it hadn't stopped raining for the past three days. It was already past 7 PM when she stepped off the bus, cold and soaked to the bone, having left her umbrella at the gym. Her place was just one block down the street, but it felt like ten miles in this weather. Her legs moved on their own, and suddenly, the Cups & Blossoms' bell was ringing above her head. The warm, floral scent wrapped around her like a blanket, but it was another kind of welcome that surprised her — a smile from the cafe owner, soft and unassuming. She was also polite enough not to ask why Vera looked so tired, which was appreciated. Vera now seemed to realize what she had truly needed. Just a friendly face to ease the weight she carried.
+    </div>
+  </div>
+
+  <!-- TAB 1: 문장분석 -->
+  <div class="section" data-tab="1">
+    <div class="section-title"><span class="icon">②</span>문장분석</div>
+
+    <div class="sent-block">
+      <div class="sent-num">① Vera couldn't wait for her car to get fixed, but that was going to require longer than initially expected.</div>
+      <div class="sent-en">Vera couldn't wait for her car to get fixed, but that was going to require longer than initially expected.</div>
+      <div class="sent-slash">Vera couldn't wait / for her car to get fixed, / but that / was going to require / longer / than initially expected.</div>
+      <div class="sent-ko">Vera는 / 차가 수리되기를 / 손꼽아 기다렸지만, / 처음 예상보다 / 더 오랜 시간이 / 걸릴 것이었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ wait for + 목적어 + to부정사</div>
+        <div class="g-ex">▶ wait for her car to get fixed — "차가 수리되기를 기다리다"</div>
+        <div class="g-tip">★ wait for + O + to-v 구조 — 5형식 유사 패턴 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ get + p.p. (수동 get)</div>
+        <div class="g-ex">▶ get fixed = be fixed (수동) — 구어체에서 be 대신 get 사용</div>
+        <div class="g-tip">★ get + p.p. vs. be + p.p. — 수동 표현 형태 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">② Unfortunately, that meant relying on the bus for her commute.</div>
+      <div class="sent-en">Unfortunately, that meant relying on the bus for her commute.</div>
+      <div class="sent-slash">Unfortunately, / that meant / relying on the bus / for her commute.</div>
+      <div class="sent-ko">안타깝게도, / 그것은 / 출퇴근을 위해 / 버스에 의존하는 것을 / 의미했다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ mean + 동명사 (목적어)</div>
+        <div class="g-ex">▶ meant relying — mean은 동명사를 목적어로 취함</div>
+        <div class="g-tip">★ mean + -ing (의미하다) vs. mean + to-v (의도하다) 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">③ To add to the cruel irony, it hadn't stopped raining for the past three days.</div>
+      <div class="sent-en">To add to the cruel irony, it hadn't stopped raining for the past three days.</div>
+      <div class="sent-slash">To add to the cruel irony, / it hadn't stopped raining / for the past three days.</div>
+      <div class="sent-ko">설상가상으로, / 지난 3일 동안 / 비가 멈추지 않았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ to부정사 — 관용 접속부사적 표현</div>
+        <div class="g-ex">▶ To add to the cruel irony = To make matters worse</div>
+        <div class="g-tip">★ To add to ~ / To make matters worse — 관용 표현 의미 파악 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ stop + 동명사 (동작 중단)</div>
+        <div class="g-ex">▶ hadn't stopped raining — "비가 멈추지 않았다"</div>
+        <div class="g-tip">★ stop + -ing (중단) vs. stop + to-v (멈추고 ~하다) 의미 차이 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">④ It was already past 7 PM when she stepped off the bus, cold and soaked to the bone, having left her umbrella at the gym.</div>
+      <div class="sent-en">It was already past 7 PM when she stepped off the bus, cold and soaked to the bone, having left her umbrella at the gym.</div>
+      <div class="sent-slash">It was already past 7 PM / when she stepped off the bus, / cold and soaked to the bone, / having left / her umbrella / at the gym.</div>
+      <div class="sent-ko">그녀가 버스에서 내렸을 때는 / 이미 오후 7시가 넘었고, / 체육관에 우산을 두고 온 탓에 / 추위에 뼛속까지 흠뻑 젖어 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 완료 분사구문 (Having + p.p.) — 이유</div>
+        <div class="g-ex">▶ having left her umbrella at the gym — 버스에서 내린 시점보다 앞선 행동</div>
+        <div class="g-tip">★ Having p.p. — 주절보다 먼저 일어난 일 / 이유 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ soaked to the bone (관용 표현)</div>
+        <div class="g-ex">▶ soaked to the bone = completely wet</div>
+        <div class="g-tip">★ 관용구 의미 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑤ Her place was just one block down the street, but it felt like ten miles in this weather.</div>
+      <div class="sent-en">Her place was just one block down the street, but it felt like ten miles in this weather.</div>
+      <div class="sent-slash">Her place / was just one block / down the street, / but it felt / like ten miles / in this weather.</div>
+      <div class="sent-ko">그녀의 집은 / 길 아래로 / 불과 한 블록이었지만, / 이 날씨에는 / 10마일처럼 / 느껴졌다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ feel like + 명사 (감각 표현)</div>
+        <div class="g-ex">▶ felt like ten miles — "10마일처럼 느껴졌다"</div>
+        <div class="g-tip">★ feel like + 명사 vs. feel like + -ing — 용법 구분 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑥ Her legs moved on their own, and suddenly, the Cups & Blossoms' bell was ringing above her head.</div>
+      <div class="sent-en">Her legs moved on their own, and suddenly, the Cups & Blossoms' bell was ringing above her head.</div>
+      <div class="sent-slash">Her legs moved / on their own, / and suddenly, / the Cups &amp; Blossoms' bell / was ringing / above her head.</div>
+      <div class="sent-ko">그녀의 다리는 / 저절로 움직였고, / 갑자기 / Cups &amp; Blossoms의 벨이 / 그녀의 머리 위에서 / 울리고 있었다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ on one's own (관용 표현)</div>
+        <div class="g-ex">▶ moved on their own = moved by themselves (자동으로)</div>
+        <div class="g-tip">★ on one's own = by oneself — 의미 동의 표현 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑦ The warm, floral scent wrapped around her like a blanket, but it was another kind of welcome that surprised her — a smile from the cafe owner, soft and unassuming.</div>
+      <div class="sent-en">The warm, floral scent wrapped around her like a blanket, but it was another kind of welcome that surprised her — a smile from the cafe owner, soft and unassuming.</div>
+      <div class="sent-slash">The warm, floral scent / wrapped around her / like a blanket, / but it was / another kind of welcome / that surprised her — / a smile from the cafe owner, / soft and unassuming.</div>
+      <div class="sent-ko">따뜻하고 꽃향기 나는 냄새가 / 담요처럼 그녀를 감쌌지만, / 그녀를 놀라게 한 것은 / 또 다른 종류의 환영이었다 — / 카페 주인의 미소, / 부드럽고 소박한.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ It ~ that 강조 구문</div>
+        <div class="g-ex">▶ it was another kind of welcome that surprised her — "~을 놀라게 한 것은 바로 ~이었다"</div>
+        <div class="g-tip">★ It is/was ~ that 강조 구문 — 강조 대상 파악 / 분열문 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 동격 명사구 — a smile ~</div>
+        <div class="g-ex">▶ another kind of welcome — a smile ... — 대시(—)로 연결된 동격</div>
+        <div class="g-tip">★ 대시/콤마로 연결된 동격 명사구 파악 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑧ She was also polite enough not to ask why Vera looked so tired, which was appreciated.</div>
+      <div class="sent-en">She was also polite enough not to ask why Vera looked so tired, which was appreciated.</div>
+      <div class="sent-slash">She was also / polite enough / not to ask / why Vera looked so tired, / which was appreciated.</div>
+      <div class="sent-ko">그녀는 또한 / Vera가 왜 그렇게 피곤해 보이는지 / 묻지 않을 만큼 / 충분히 예의 바랐고, / 그것은 고마웠다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 형용사 + enough + to부정사</div>
+        <div class="g-ex">▶ polite enough not to ask — "~할 만큼 충분히 예의 바른"</div>
+        <div class="g-tip">★ enough to-v / too ~ to-v — 부정 포함 용법 구분 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 계속적 용법 관계대명사 which — 앞 절 전체 지칭</div>
+        <div class="g-ex">▶ which was appreciated — 앞 문장 전체(묻지 않음)를 선행사로</div>
+        <div class="g-tip">★ ,which — 앞 절/문장 전체 지칭 / that으로 대체 불가 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑨ Vera now seemed to realize what she had truly needed.</div>
+      <div class="sent-en">Vera now seemed to realize what she had truly needed.</div>
+      <div class="sent-slash">Vera now / seemed to realize / what she had truly needed.</div>
+      <div class="sent-ko">Vera는 이제 / 자신이 진정으로 필요했던 것을 / 깨달은 것 같았다.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ seem + to부정사</div>
+        <div class="g-ex">▶ seemed to realize — "~인 것 같다"의 추측 표현</div>
+        <div class="g-tip">★ seem to-v / seem + that절 — 표현 전환 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 what (목적어절)</div>
+        <div class="g-ex">▶ what she had truly needed = the thing that she had truly needed</div>
+        <div class="g-tip">★ what절 = the thing which절 — 선행사 포함 명사절 출제</div>
+      </div>
+    </div>
+
+    <div class="sent-block">
+      <div class="sent-num">⑩ Just a friendly face to ease the weight she carried.</div>
+      <div class="sent-en">Just a friendly face to ease the weight she carried.</div>
+      <div class="sent-slash">Just / a friendly face / to ease / the weight / she carried.</div>
+      <div class="sent-ko">그저 / 자신이 짊어진 / 무게를 / 덜어 줄 / 친근한 얼굴 하나.</div>
+      <div class="grammar-item">
+        <div class="g-name">◆ to부정사 — 형용사적 용법 (명사 수식)</div>
+        <div class="g-ex">▶ a friendly face to ease — face를 수식하는 형용사적 to부정사</div>
+        <div class="g-tip">★ to부정사의 형용사적 용법 — 수식 대상 파악 출제</div>
+      </div>
+      <div class="grammar-item">
+        <div class="g-name">◆ 관계대명사 목적격 생략</div>
+        <div class="g-ex">▶ the weight (that/which) she carried — 목적격 관계대명사 생략</div>
+        <div class="g-tip">★ 목적격 관계대명사 생략 가능 여부 확인 출제</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: 핵심단어 -->
+  <div class="section" data-tab="2">
+    <div class="section-title"><span class="icon">③</span>핵심단어 및 표현</div>
+    <div class="vocab-item"><div class="vocab-word">commute</div><div class="vocab-meaning">통근, 출퇴근하다</div><div class="vocab-pos">n./v.</div><div class="vocab-deriv">commuter (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">irony</div><div class="vocab-meaning">아이러니, 반어</div><div class="vocab-pos">n.</div><div class="vocab-deriv">ironic (adj.), ironically (adv.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">soaked to the bone</div><div class="vocab-meaning">뼛속까지 흠뻑 젖은</div><div class="vocab-pos">phr.</div><div class="vocab-deriv">soak (v.), soaked (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">floral</div><div class="vocab-meaning">꽃의, 꽃향기 나는</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">flower (n.), flora (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">scent</div><div class="vocab-meaning">향기, 냄새</div><div class="vocab-pos">n.</div><div class="vocab-deriv">scented (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">unassuming</div><div class="vocab-meaning">겸손한, 소박한</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">assuming (adj.) ↔ unassuming</div></div>
+    <div class="vocab-item"><div class="vocab-word">polite</div><div class="vocab-meaning">예의 바른</div><div class="vocab-pos">adj.</div><div class="vocab-deriv">politely (adv.), politeness (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">appreciate</div><div class="vocab-meaning">감사히 여기다, 감사하다</div><div class="vocab-pos">v.</div><div class="vocab-deriv">appreciation (n.), appreciative (adj.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">ease</div><div class="vocab-meaning">덜다, 완화하다 / 편안함</div><div class="vocab-pos">v./n.</div><div class="vocab-deriv">easy (adj.), easily (adv.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">rely on</div><div class="vocab-meaning">의지하다, 의존하다</div><div class="vocab-pos">phr. v.</div><div class="vocab-deriv">reliable (adj.), reliability (n.)</div></div>
+    <div class="vocab-item"><div class="vocab-word">on one's own</div><div class="vocab-meaning">저절로, 스스로</div><div class="vocab-pos">phr.</div><div class="vocab-deriv">= by oneself</div></div>
+  </div>
+
+  <!-- TAB 3: 전문해석 -->
+  <div class="section" data-tab="3">
+    <div class="section-title"><span class="icon">④</span>전문해석</div>
+    <div class="translation-text">
+      Vera는 차가 수리되기를 간절히 기다렸지만, 처음 예상보다 더 오래 걸릴 것이었다. 안타깝게도 그것은 출퇴근을 버스에 의존해야 함을 의미했다. 설상가상으로, 지난 3일 동안 비가 멈추지 않았다. 그녀가 버스에서 내렸을 때는 이미 오후 7시가 넘었고, 체육관에 우산을 두고 온 탓에 추위에 뼛속까지 흠뻑 젖어 있었다. 그녀의 집은 길 아래로 불과 한 블록이었지만, 이 날씨에는 10마일처럼 느껴졌다. 그녀의 다리는 저절로 움직였고, 갑자기 Cups & Blossoms의 벨이 그녀의 머리 위에서 울렸다. 따뜻하고 꽃향기 나는 냄새가 담요처럼 그녀를 감쌌지만, 그녀를 진정으로 놀라게 한 것은 또 다른 환영이었다 — 카페 주인의 부드럽고 소박한 미소. 그녀는 또한 Vera가 왜 그렇게 피곤해 보이는지 묻지 않을 만큼 충분히 예의 바랐고, 그것이 고마웠다. Vera는 이제 자신이 진정으로 필요했던 것을 깨달은 것 같았다. 바로 자신이 짊어진 무게를 덜어 줄 친근한 얼굴 하나였다.
+    </div>
+  </div>
+
+  <!-- TAB 4: 주제·요지 -->
+  <div class="section" data-tab="4">
+    <div class="section-title"><span class="icon">⑤</span>주제·요지·구조</div>
+    <div class="topic-box"><div class="topic-label">주제</div><div class="topic-content">지치고 힘든 일과 끝에 카페 주인의 친근한 미소가 Vera에게 진정한 위로가 됨</div></div>
+    <div class="topic-box"><div class="topic-label">요지</div><div class="topic-content">차 수리 지연·우산 분실·쏟아지는 비로 지쳐버린 Vera는 무의식적으로 카페에 들어섰다가, 따뜻한 향기보다도 카페 주인의 소박하고 친근한 미소가 자신의 진정한 필요였음을 깨닫는다.</div></div>
+    <div class="topic-box"><div class="topic-label">구조 흐름</div>
+      <div class="structure-step"><div class="step-badge">도입</div><div class="step-text">차 수리 지연 + 버스 통근 + 연속된 비 — 삼중고 설정</div></div>
+      <div class="structure-step"><div class="step-badge">전개</div><div class="step-text">우산 없이 뼛속까지 젖어 귀가 중 / 다리가 저절로 카페로 향함</div></div>
+      <div class="structure-step"><div class="step-badge">전환</div><div class="step-text">꽃향기 + 카페 주인의 소박한 미소 / 피곤한 이유를 묻지 않는 배려</div></div>
+      <div class="structure-step"><div class="step-badge">결말</div><div class="step-text">Vera가 자신에게 진정 필요한 것 — 친근한 얼굴 하나 — 를 깨달음</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: 변형문제 -->
+  <div class="section" data-tab="5">
+    <div class="section-title"><span class="icon">⑥</span>변형문제 & 서술형</div>
+
+    <div class="quiz-block" id="P4-q1">
+      <div class="quiz-q">1. 다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P4-q1', this, false)">① 비 오는 날 대중교통 이용의 불편함</button></li>
+        <li><button onclick="checkAnswer('P4-q1', this, false)">② 카페의 따뜻한 향기가 주는 심리적 효과</button></li>
+        <li><button onclick="checkAnswer('P4-q1', this, false)">③ 일상의 작은 불행이 쌓일 때의 스트레스</button></li>
+        <li><button onclick="checkAnswer('P4-q1', this, true)">④ 지친 하루 끝에 카페 주인의 친근한 미소가 가져다 준 진정한 위로</button></li>
+        <li><button onclick="checkAnswer('P4-q1', this, false)">⑤ 예상치 못한 장소에서 발견하는 행복의 의미</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P4-q1-exp">정답 ④ — 지치고 힘든 상황에서 Vera가 카페에서 경험한 진정한 위로는 향기가 아닌 카페 주인의 친근한 미소였으며, 그것이 자신의 진정한 필요였음을 깨닫는 것이 핵심이다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P4-q1')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P4-q2">
+      <div class="quiz-q">2. 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="quiz-passage">The warm, floral scent wrapped around her like a blanket, but it was another kind of welcome that surprised her. Vera now seemed to realize what she had truly needed. Just a __________ face to ease the weight she carried.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P4-q2', this, false)">① familiar</button></li>
+        <li><button onclick="checkAnswer('P4-q2', this, false)">② beautiful</button></li>
+        <li><button onclick="checkAnswer('P4-q2', this, true)">③ friendly</button></li>
+        <li><button onclick="checkAnswer('P4-q2', this, false)">④ cheerful</button></li>
+        <li><button onclick="checkAnswer('P4-q2', this, false)">⑤ polished</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P4-q2-exp">정답 ③ — 원문 마지막 문장 "Just a friendly face to ease the weight she carried"에서 정답 확인.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P4-q2')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P4-q3">
+      <div class="quiz-q">3. 다음 밑줄 친 부분 중 어법상 틀린 것은?</div>
+      <div class="quiz-passage">That meant <u>(①relying)</u> on the bus for her commute. It was already past 7 PM when she stepped off the bus, cold and soaked to the bone, <u>(②having left)</u> her umbrella at the gym. It was another kind of welcome <u>(③that)</u> surprised her — a smile from the cafe owner, soft and <u>(④unassuming)</u>. She was also polite enough not <u>(⑤asking)</u> why Vera looked so tired.</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P4-q3', this, false)">① relying</button></li>
+        <li><button onclick="checkAnswer('P4-q3', this, false)">② having left</button></li>
+        <li><button onclick="checkAnswer('P4-q3', this, false)">③ that</button></li>
+        <li><button onclick="checkAnswer('P4-q3', this, false)">④ unassuming</button></li>
+        <li><button onclick="checkAnswer('P4-q3', this, true)">⑤ asking → to ask</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P4-q3-exp">정답 ⑤ — "polite enough not to ask" — enough + to부정사 구조에서 to ask가 맞다. asking은 틀림.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P4-q3')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P4-q4">
+      <div class="quiz-q">4. 다음 글의 내용과 일치하지 않는 것은?</div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P4-q4', this, false)">① Vera의 차 수리는 처음 예상보다 더 오래 걸렸다.</button></li>
+        <li><button onclick="checkAnswer('P4-q4', this, false)">② Vera는 체육관에 우산을 두고 왔다.</button></li>
+        <li><button onclick="checkAnswer('P4-q4', this, true)">③ Vera는 카페에 들어가기로 미리 계획하고 있었다.</button></li>
+        <li><button onclick="checkAnswer('P4-q4', this, false)">④ 카페 주인은 Vera에게 피곤한 이유를 묻지 않았다.</button></li>
+        <li><button onclick="checkAnswer('P4-q4', this, false)">⑤ Vera는 자신에게 필요했던 것이 친근한 얼굴이었음을 깨달았다.</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P4-q4-exp">정답 ③ — "Her legs moved on their own" — Vera의 다리가 저절로 카페로 향했으며, 계획된 방문이 아님을 명확히 보여준다.</div>
+      <button class="quiz-reset" onclick="resetQuiz('P4-q4')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="quiz-block" id="P4-q5">
+      <div class="quiz-q">5. 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br><small style="font-weight:400;color:#666">Vera couldn't wait for her car to get fixed, but that was going to require longer than initially expected.</small></div>
+      <div class="quiz-passage">
+        (A) Her legs moved on their own, and suddenly, the Cups & Blossoms' bell was ringing above her head. The warm, floral scent wrapped around her like a blanket, but it was another kind of welcome that surprised her.<br><br>
+        (B) Unfortunately, that meant relying on the bus for her commute. To add to the cruel irony, it hadn't stopped raining for the past three days. It was already past 7 PM when she stepped off the bus.<br><br>
+        (C) She was also polite enough not to ask why Vera looked so tired, which was appreciated. Vera now seemed to realize what she had truly needed. Just a friendly face to ease the weight she carried.
+      </div>
+      <ul class="quiz-options">
+        <li><button onclick="checkAnswer('P4-q5', this, false)">① (A)-(B)-(C)</button></li>
+        <li><button onclick="checkAnswer('P4-q5', this, false)">② (A)-(C)-(B)</button></li>
+        <li><button onclick="checkAnswer('P4-q5', this, true)">③ (B)-(A)-(C)</button></li>
+        <li><button onclick="checkAnswer('P4-q5', this, false)">④ (C)-(B)-(A)</button></li>
+        <li><button onclick="checkAnswer('P4-q5', this, false)">⑤ (C)-(A)-(B)</button></li>
+      </ul>
+      <div class="quiz-explanation" id="P4-q5-exp">정답 ③ (B)-(A)-(C) — (B) 버스 통근·비·귀가 중 → (A) 저절로 카페 입장·향기·미소 → (C) 배려·깨달음·친근한 얼굴</div>
+      <button class="quiz-reset" onclick="resetQuiz('P4-q5')">↺ 다시 풀기</button>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 1 — 빈칸 완성</div>
+      <div class="essay-q">다음 요약문의 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.</div>
+      <div class="essay-condition">조건: 본문에 나온 단어를 그대로 쓸 것 / 각 빈칸에 한 단어씩</div>
+      <div class="quiz-passage">Vera entered the cafe without planning to, and realized that what she truly needed was not the warm (A)__________ but a (B)__________ face from the cafe owner.</div>
+      <textarea class="essay-textarea" placeholder="(A): ___________ / (B): ___________"></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P4-essay1')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P4-essay1"><strong>모범답안:</strong> (A) scent / (B) friendly<br><span style="font-size:11px">근거: "The warm, floral scent" / "Just a friendly face"</span></div>
+    </div>
+
+    <div class="essay-block">
+      <div class="quiz-q">📝 서술형 2 — 영어 서술</div>
+      <div class="essay-q">Vera가 카페에 들어가게 된 경위와 그곳에서 진정으로 위로받은 것이 무엇이었는지 영어로 서술하시오.</div>
+      <div class="essay-condition">조건: 완전한 영어 문장으로 / 35단어 내외</div>
+      <textarea class="essay-textarea" placeholder="답을 여기에 쓰세요..."></textarea>
+      <button class="essay-answer-btn" onclick="toggleAnswer('P4-essay2')">모범답안 보기</button>
+      <div class="essay-model-answer" id="P4-essay2"><strong>모범답안:</strong> Vera's legs moved on their own and led her into the cafe. There, she was truly comforted not by the warm scent but by the friendly, unassuming smile of the cafe owner.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">에듀케레 영수학원 분석지 · EBS-2 · 지문 4</div>
+</div>
+<!-- END PASSAGE 4 -->
+  </div><!-- end #content -->
+</div><!-- end #main -->
+
+<script>
+// ── STATE ──
+var currentPassage = 0;
+var currentTab = 0;
+
+// ── SELECT PASSAGE ──
+function selectPassage(idx) {
+  // hide all passages
+  var passages = document.querySelectorAll('.passage');
+  for (var i = 0; i < passages.length; i++) {
+    passages[i].style.display = 'none';
+  }
+  // show selected
+  document.getElementById('passage-' + idx).style.display = 'block';
+
+  // update sidebar buttons
+  var btns = document.querySelectorAll('.passage-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('active');
+  }
+  btns[idx].classList.add('active');
+
+  currentPassage = idx;
+  currentTab = 0;
+
+  // reset tab to 0
+  selectTab(0);
+
+  // scroll to top
+  document.getElementById('content').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+// ── SELECT TAB ──
+function selectTab(tabIdx) {
+  currentTab = tabIdx;
+
+  // update top tab buttons
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < tabBtns.length; i++) {
+    tabBtns[i].classList.remove('active');
+  }
+  tabBtns[tabIdx].classList.add('active');
+
+  // find active passage and toggle its sections
+  var activePassage = document.getElementById('passage-' + currentPassage);
+  if (!activePassage) return;
+
+  var sections = activePassage.querySelectorAll('.section');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].classList.remove('active');
+    if (parseInt(sections[i].getAttribute('data-tab')) === tabIdx) {
+      sections[i].classList.add('active');
+    }
+  }
+
+  window.scrollTo(0, 0);
+}
+
+// ── QUIZ: CHECK ANSWER ──
+function checkAnswer(blockId, btn, isCorrect) {
+  var block = document.getElementById(blockId);
+  var allBtns = block.querySelectorAll('.quiz-options li button');
+
+  // disable all
+  for (var i = 0; i < allBtns.length; i++) {
+    allBtns[i].disabled = true;
+    // if this is the correct one, highlight green
+    if (allBtns[i].getAttribute('data-correct') === 'true') {
+      allBtns[i].classList.add('correct');
+    }
+  }
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    // find and highlight correct answer
+    for (var i = 0; i < allBtns.length; i++) {
+      if (allBtns[i] !== btn) {
+        // we need to re-call to find correct — use data attribute
+      }
+    }
+  }
+
+  // show explanation
+  var exp = document.getElementById(blockId + '-exp');
+  if (exp) exp.classList.add('show');
+}
+
+// Better approach: mark correct buttons on load
+(function() {
+  // We'll use onclick's second param isCorrect to track
+  // Instead, re-implement with data attributes after load
+  var quizBlocks = document.querySelectorAll('.quiz-block');
+  quizBlocks.forEach(function(block) {
+    var optBtns = block.querySelectorAll('.quiz-options li button');
+    optBtns.forEach(function(b) {
+      // parse onclick to find isCorrect
+      var onclickStr = b.getAttribute('onclick') || '';
+      var match = onclickStr.match(/checkAnswer\([^,]+,\s*this,\s*(true|false)\)/);
+      if (match) {
+        b.setAttribute('data-correct', match[1]);
+      }
+    });
+  });
+})();
+
+// Override checkAnswer with cleaner version
+function checkAnswer(blockId, btn, isCorrect) {
+  var block = document.getElementById(blockId);
+  var allBtns = block.querySelectorAll('.quiz-options li button');
+
+  for (var i = 0; i < allBtns.length; i++) {
+    allBtns[i].disabled = true;
+    if (allBtns[i].getAttribute('data-correct') === 'true') {
+      allBtns[i].classList.add('correct');
+    }
+  }
+
+  if (!isCorrect) {
+    btn.classList.add('wrong');
+  }
+
+  var exp = document.getElementById(blockId + '-exp');
+  if (exp) exp.classList.add('show');
+}
+
+// ── QUIZ: RESET ──
+function resetQuiz(blockId) {
+  var block = document.getElementById(blockId);
+  var allBtns = block.querySelectorAll('.quiz-options li button');
+  for (var i = 0; i < allBtns.length; i++) {
+    allBtns[i].disabled = false;
+    allBtns[i].classList.remove('correct', 'wrong');
+  }
+  var exp = document.getElementById(blockId + '-exp');
+  if (exp) exp.classList.remove('show');
+}
+
+// ── ESSAY: TOGGLE ANSWER ──
+function toggleAnswer(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  if (el.classList.contains('show')) {
+    el.classList.remove('show');
+  } else {
+    el.classList.add('show');
+  }
+}
+</script>
+</body>
+</html>
